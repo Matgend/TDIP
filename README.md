@@ -7,7 +7,7 @@ library(TDIP)
 library(naniar)
 ```
 
-# Installation
+## Installation
 
 TDIP uses R and python. All the package needed can be installed via R. 
 
@@ -35,7 +35,7 @@ reticulate::conda_install("EnvironmentName",c("tensorflow = 2.9.1", "numpy = 1.2
 reticulate::py_install(c("tensorflow = 2.9.1", "numpy = 1.22.3", "scikit-learn =  1.1.1", "tqdm = 4.64.1"), pip = TRUE)
 ```
 
-# Data
+## Data
 
 The data can be simulated or empirical. To simulate a trait dataset, the function `data_simulator()` can be used. The function takes 2 arguments:
 
@@ -88,7 +88,7 @@ empData <- data_preprocessing(simulatedData,
 #head(empData$FinalData)
 ```
 
-# Generation of missing values
+## Generation of missing values
 
 Missing values follow a missing mechanisms. In this package, the user can generate missing values according to 4 missing mechanisms:
 
@@ -148,7 +148,7 @@ for(rdn in 1:length(NaData)){
 }
 ```
 
-# Missing values imputation
+## Missing values imputation
 
 The imputation of missing values can be done by several imputation methods according several strategies. The methods available in the TDIP package are the following:
 
@@ -205,7 +205,7 @@ hv <- hard_voting(listOfdataframe = datasets)
 ```
 
 
-# Error calculation
+## Error calculation
 
 The error calculation is the root mean square error (RMSE) for continuous variables while for categorical variables is the proportion of falsely classified entries (PFC).
 ```{r}
