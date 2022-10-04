@@ -74,14 +74,13 @@ For an empirical dataset, you can use the function `data_preprocessing()` to con
 data(simulatedData)
 data(tree)
 
-#if no tree
 
 simulatedData$Species <- rownames(simulatedData)
 
 empData <- data_preprocessing(simulatedData, 
                               empTree = NULL, 
                               save = NULL)
-
+#if no tree
 empData <- data_preprocessing(simulatedData, 
                               empTree = tree, 
                               save = NULL)
@@ -189,6 +188,7 @@ imputedData <- missing_data_imputation(ImputationApproachesNames = methods,
                                        save = NULL)
 ```
 
+### Hard voting
 
 Then, the function `hard_voting()` provides the possibility to apply an hard voting classifier using imputed datasets.
 ```{r}
