@@ -1,0 +1,41 @@
+Package: TDIP
+Title: Trait Data Imputation with Phylogeny 
+Version: 0.0.0.9000
+Authors@R: 
+    person("Matthieu", "Gendre", , "matge1752@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: This package provides tools for imputation of missing values in trait datasets using phylogenetic information. With this package, the user can simulate phylogenetic tree trough a birth death model, simulate trait dataset according several model of evolution, generate missing values and impute missing values with phylogenetic imputation methods, machine learning methods and deep learning methods.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Imports: 
+    ape,
+    castor,
+    corHMM,
+    data.table,
+    fastDummies,
+    geiger,
+    laeken,
+    Matrix,
+    mice,
+    missForest,
+    missMethods,
+    mltools,
+    mvMORPH,
+    phangorn,
+    phytools,
+    PVR,
+    reticulate,
+    Rphylopars,
+    stringr,
+    tibble,
+    VIM
+Depends: 
+    R (>= 2.10)
+LazyData: true
+Suggests: 
+    rmarkdown,
+    knitr
+VignetteBuilder: knitr
