@@ -1,6 +1,6 @@
 # TDIP
 
-Trait Data Imputation with Phylogeny (TDIP) is package allowing to the imputation of missing values in a trait dataset with the help or not of a phylogenetic tree. By using this package, the user can simulate trait datasets, include missing values according to several missing mechanisms, and / or apply various imputation approaches. 
+Trait Data Imputation with Phylogeny (TDIP) is a package allowing to the imputation of missing values in a trait dataset with the help or not of a phylogenetic tree. By using this package, the user can simulate trait datasets, include missing values according to several missing mechanisms, and / or apply various imputation approaches. 
 
 ```{r setup}
 library(TDIP)
@@ -18,10 +18,10 @@ library(devtools)
 devtools::install_github("Matgend/TDIP")
 ```
 
-2. To use GAIN, `python >= 3.9` needs to be installed as well as the `tensorflow`, `numpy`, `scikit-learn` and `tqdm` packages. The R package `reticulate` provide all the commands needed.
+2. To use GAIN, `python >= 3.9` needs to be installed as well as the `tensorflow`, `numpy`, `scikit-learn` and `tqdm` packages. The R package `reticulate` provides all the commands needed.
 ```{r, eval = FALSE}
 
-#install 
+#install R packages
 install.packages("reticulate")
 library(reticulate)
 install_miniconda()
@@ -37,14 +37,14 @@ reticulate::py_install(c("tensorflow = 2.9.1", "numpy = 1.22.3", "scikit-learn =
 
 ## Data
 
-The data can be simulated or empirical. To simulate a trait dataset, the function `data_simulator()` can be used. The function takes 2 arguments:
+Simulated or empirical data can be used.. To simulate a trait dataset, the function `data_simulator()` can be used. The function takes 2 arguments:
 
 1. a dataframe composed of these columns:
 * *nbr_traits*: Number of traits simulated with specific parameters
 * *class*: Type of traits, (continuous, non_eq_nominal(categorical) and ordinal)
 * *model*: Evolutionary model (BM1, OU1, ARD, SYM, ER, Manual)
 * *states*: Number of states for discrete traits, (if continuous set it to 1)
-* *correlation*: Index corresponding to the group of simulated traits which are correlated or not to other traits
+* *correlation*: Index corresponding to the group of simulated traits which are correlated or not with other traits
 * *uncorr_traits*: Among the "nbr_traits", it's the number of uncorrelated traits
 * *fraction_uncorr_traits*: Fraction among the "nbr_traits" which are uncorrelated
 * *lambda*: Pagel's lambda
@@ -56,7 +56,7 @@ The data can be simulated or empirical. To simulate a trait dataset, the functio
 
 The function `data_simulator()` returns a list containing the simulated trait data, the phylogenetic tree, all the parameters used for the simulation and the inputs.
 ```{r, results = "hide"}
-#load the data present in the package
+#load the data available in the package
 data(dataframe)
 param_tree <- list(0.4, 0.1, 100)
 
@@ -90,7 +90,7 @@ empData <- data_preprocessing(simulatedData,
 
 ## Generation of missing values
 
-Missing values follow a missing mechanisms. In this package, the user can generate missing values according to 4 missing mechanisms:
+Missing values follow a missing mechanism. In this package, the user can generate missing values according to 4 missing mechanisms:
 
 1. Missing completely at random (MCAR)
 
@@ -167,11 +167,11 @@ The imputation of missing values can be done by several imputation methods accor
 
 Each of these methods can be applied according 3 strategies: 
 
-1. no phylogenetic information
+1. No phylogenetic information
 
-2. with phylogenetic information as eigenvectors
+2. With phylogenetic information as eigenvectors
 
-3. "2-step" which consists in using as input the fusion of a complete data obtained by using the phylogenetic imputation method to the incomplete data before the missing values imputation.
+3. "2-step" which consists in using as input the concatenation of the output of the phylogenetic imputation methods with the incomplete data before the missing values imputation.
 
 The function `missing_data_imputation()` provides a way to impute missing values through several imputation approaches and strategies. Each imputation method can be called separately too.
 ```{r, results = "hide"}
@@ -190,7 +190,7 @@ imputedData <- missing_data_imputation(ImputationApproachesNames = methods,
 
 ### Hard voting
 
-Then, the function `hard_voting()` provides the possibility to apply an hard voting classifier using imputed datasets.
+Then, the function `hard_voting()` provides the possibility to apply a hard voting classifier using imputed datasets.
 ```{r}
 
 #select imputed dataset in the imputedData object
@@ -207,7 +207,7 @@ hv <- hard_voting(listOfdataframe = datasets)
 
 ## Error calculation
 
-The error calculation is the root mean square error (RMSE) for continuous variables while for categorical variables is the proportion of falsely classified entries (PFC).
+The error calculation is the root mean square error (RMSE) for continuous variables and for categorical variables, is the proportion of falsely classified entries (PFC).
 ```{r}
 
 #compute error for a data containing MCAR imputed by missForest
