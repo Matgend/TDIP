@@ -214,7 +214,7 @@ The error calculation is the root mean square error (RMSE) for continuous variab
 errors <- imputation_error(imputedData = imputedData$MissForest_NP,
                            trueData = simData$FinalData, 
                            missingData = missing_values$DataNaN$MCAR$`MCAR/13/0.05`, 
-                         imputationApproachesName = methods[2], 
+                           imputationApproachesName = methods[2], 
                            dataframe = simData$Dataframe)
 ```
 
