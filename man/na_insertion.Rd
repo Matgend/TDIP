@@ -26,7 +26,7 @@ than MARTraits}
 \item{save}{character correspond to the name of the saved file in .RData format}
 }
 \value{
-a nested list composed of the partitioned data with the 4 categories of missing data (MCRA, MAR, MNAR and PhyloNa
+A nested list composed of the partitioned data with the 4 categories of missing data (MCRA, MAR, MNAR and PhyloNa
 ) according to a precise missing rate and of list of the parameters used for the missing values generation
 }
 \description{

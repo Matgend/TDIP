@@ -12,7 +12,7 @@ pi_categorical_traits(missingData, tree)
 \item{tree}{phylo object}
 }
 \value{
-a data.frame of 1 or more factor columns with the NAs replaced by values, parameters used for the
+A data.frame of 1 or more factor columns with the NAs replaced by values, parameters used for the
 imputation, matrix of probabilities of each states
 }
 \description{

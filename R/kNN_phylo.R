@@ -11,7 +11,7 @@
 #' @param variance_fraction variance_fraction minimum variance (%) explained by the eigenvectors
 #' @param tree phylo object
 #' @param hint data frame already imputed by a comprative methods (Rphylopars for continuous and corHMM for discrete)
-#' @return a data frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the imputation
+#' @return A data frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the imputation
 #' @export
 kNN_phylo <- function(missingData, k, numFun, catFun, variance_fraction = 0, tree, hint = NULL){
 

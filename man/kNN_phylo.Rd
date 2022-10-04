@@ -22,7 +22,7 @@ kNN_phylo(missingData, k, numFun, catFun, variance_fraction = 0, tree, hint = NU
 \item{hint}{data frame already imputed by a comprative methods (Rphylopars for continuous and corHMM for discrete)}
 }
 \value{
-a data frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the imputation
+A data frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the imputation
 }
 \description{
 This function imputes missing data for continuous and discrete traits applying the kNN approach

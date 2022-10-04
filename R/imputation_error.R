@@ -11,7 +11,7 @@
 #' @param missingData array of data with missing values
 #' @param imputationApproachesName character providing the name of the imputed appraoch used
 #' @param dataframe dataframe given information about the data (type of variables, model of evolution, ....)
-#' @return return a data frame with in the first column the trait names and in the second the errors
+#' @return A data frame with in the first column the trait names and in the second the errors
 #' @export
 imputation_error <- function(imputedData, trueData, missingData, imputationApproachesName, dataframe){
 

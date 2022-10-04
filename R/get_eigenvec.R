@@ -6,7 +6,7 @@
 #'
 #' @param tree phylogenetic tree of class "phylo"
 #' @param variance_fraction variance_fraction minimum variance (%) explained by the eigenvectors
-#' @return a data frame in which each column represents an eigenvector
+#' @return A data frame in which each column represents an eigenvector
 #' @export
 get_eigenvec <- function(tree, variance_fraction){
 

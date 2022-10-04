@@ -9,13 +9,13 @@ corDiscTraitsOneTrait(nbrTraits, discreteTrait, highCor)
 \arguments{
 \item{nbrTraits}{vector, defining the number of traits (columns)}
 
-\item{highCor}{numerical, strength of the correlation. if nbrState = 3 and highCor = 0.8, the other 2 traits will have
+\item{highCor}{numerical, strength of the correlation. For instance, if nbrState = 3 and highCor = 0.8, the other 2 traits will have
 a correlation of (1-0.8)/(nbrTraits - 1)}
 
 \item{discreteTraits}{vector from which the simulated traits are correlated}
 }
 \value{
-a data frame of discrete traits where each column is a trait. Discrete traits are factors.
+A data frame of discrete traits where each column is a trait. Discrete traits are factors.
 }
 \description{
 This function generates a data frame of discrete traits

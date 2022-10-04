@@ -14,7 +14,7 @@ phyloNa_miss_meca(missingRate, ds, tree)
 \item{tree}{object of class phylo}
 }
 \value{
-a dataset with NA following a pattern of MNAR.
+A dataset with NA following a pattern of MNAR.
 }
 \description{
 Simulate NaNs in a complete data composed of discrete and continuous traits which are correlated

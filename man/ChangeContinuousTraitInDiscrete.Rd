@@ -13,12 +13,11 @@ ChangeContinuousTraitInDiscrete(Matrix, columnsIndex, Nstates, subclass)
 
 \item{Nstates}{number of states of the defined traits (could be a vector or a value)}
 
-\item{subclass}{\itemize{
-\item intervals: states are fairly split
-}}
+\item{subclass}{intervals: states are fairly split. ordinal: ordered states,
+split is random. non_eq_nominal: split is random, no order (shuffled)}
 }
 \value{
-return a data frame with the integer variables and continuous variables.
+A data frame with the integer variables and continuous variables.
 }
 \description{
 This function converts continuous variables in discrete variables. The variables can be converted as

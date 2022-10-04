@@ -4,23 +4,20 @@
 #'
 #' @usage data_simulator(param_tree, dataframe, save = NULL)
 #'
+#' @description The parameter `dataframe` is composed of 11 columns:
+#' * nbr_traits: Number of traits simulated with specific parameters
+#' * class: Type of traits, (continuous, non_eq_nominal(categorical) and ordinal)
+#' * model: Evolutionary model (BM1, OU1, ARD, SYM, ER, Manual)
+#' * states: Number of states for discrete traits, (if continuous set it to 1)
+#' * correlation: Index corresponding to the group of simulated traits which are correlated or not to other traits
+#' * uncorr_traits: Among the "nbr_traits", it's the number of uncorrelated traits
+#' * fraction_uncorr_traits: Fraction among the "nbr_traits" which are uncorrelated
+#' * lambda: Integer, Pagel's lambda
+#' * kappa: Integer, Pagel's kappa
+#' * highCor: Correlation rate between the trait defined in "manTrait" and the simulated traits.
+#' * manTrait: Index of the trait correlated with the trait(s) simulated according to the manual model.
 #' @param param_tree list of integers needed for the simulation of the phylo object
 #' @param dataframe data frame composed of 11 columns:
-#'                                        - nbr_traits: Number of traits simulated with specific parameters
-#'                                        - class: Type of traits, (continuous, non_eq_nominal(categorical) and ordinal)
-#'                                        - model: Evolutionary model (BM1, OU1, ARD, SYM, ER, Manual)
-#'                                        - states: Number of states for discrete traits, (if continuous set it to 1)
-#'                                        -	correlation: Index corresponding to the group of simulated traits which are
-#'                                          correlated or not to other traits
-#'                                        - uncorr_traits: Among the "nbr_traits", it's the number of uncorrelated traits
-#'                                        - fraction_uncorr_traits: Fraction among the "nbr_traits" which are uncorrelated
-#'                                        - lambda: Integer, Pagel's lambda
-#'                                        - kappa: Integer, Pagel's kappa
-#'                                        - highCor: Correlation rate between the trait defined in "manTrait" and the
-#'                                          simulated traits.
-#'                                        - manTrait: Index of the trait correlated with the trait(s) simulated according to
-#'                                          the manual model.
-#'
 #' @param save path to save the data
 #' @return list composed of a dataset with mixed data, a continuous data, a discrete data, the list of phylogenetic trees,
 #' several list of the parameters used for the simulation and the dataframe used as input.

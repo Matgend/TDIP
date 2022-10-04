@@ -14,7 +14,7 @@ Optional, can be fixed to be equal between all traits by giving one value or
 Ntraits*(Ntraits-1)/2}
 }
 \value{
-matrix Ntrait x Ntrait for simulating trait evolution
+A matrix Ntrait * Ntrait for simulating trait evolution
 }
 \description{
 This function generates an alpha matrix for

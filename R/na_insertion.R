@@ -15,7 +15,7 @@
 #'@param traitsNoNA integer mentioning the columns in which we don't want NA generation.
 #'@param tree phylo object, by default NULL (in case no phylogenetic tree)
 #'@param save character correspond to the name of the saved file in .RData format
-#'@return a nested list composed of the partitioned data with the 4 categories of missing data (MCRA, MAR, MNAR and PhyloNa
+#'@return A nested list composed of the partitioned data with the 4 categories of missing data (MCRA, MAR, MNAR and PhyloNa
 #') according to a precise missing rate and of list of the parameters used for the missing values generation
 #'@export
 na_insertion <- function(missingRate, dataset, missingTraits, MARTraits, MARctrlTraits = NULL, traitsNoNA = NULL,

@@ -11,12 +11,11 @@ ConvertContinousInDiscreteValues(values, Nstates, subclass)
 
 \item{Nstates}{number of states of the defined traits}
 
-\item{subclass}{\itemize{
-\item intervals: states are fairly split
-}}
+\item{subclass}{intervals: states are fairly split. ordinal: ordered states,
+split is random. non_eq_nominal: split is random, no order (shuffled)}
 }
 \value{
-return the vector with integer instead of floats
+A vector with integer instead of floats
 }
 \description{
 This function converts a continuous variable in discrete variable. The variable can be converted as interval,

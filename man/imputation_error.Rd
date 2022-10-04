@@ -18,7 +18,7 @@ imputation_error(imputedData, trueData, missingData, imputationApproachesName, d
 \item{dataframe}{dataframe given information about the data (type of variables, model of evolution, ....)}
 }
 \value{
-return a data frame with in the first column the trait names and in the second the errors
+A data frame with in the first column the trait names and in the second the errors
 }
 \description{
 This function calculates the RMSE for imputed continuous data, the absolute

@@ -21,7 +21,7 @@ there is "P")}
 \item{save}{name of the output}
 }
 \value{
-return a .RData object with the data imputed and all the parameters used for.
+A list with the data imputed and all the parameters used for.
 }
 \description{
 This function imputes the dataset containing missing values with Rphylopars, corHMM,

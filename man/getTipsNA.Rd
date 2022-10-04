@@ -12,7 +12,7 @@ getTipsNA(Tree, MinTips)
 \item{missingRates}{numerical vector corresponding to the rate of missing value to introduce in the data}
 }
 \value{
-vector containing the names of the species that should get NAs for their traits
+A vector containing the names of the species that should get NAs for their traits
 }
 \description{
 This function returns the names of the species that should get NAs for their traits

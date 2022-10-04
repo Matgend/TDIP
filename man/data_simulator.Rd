@@ -9,21 +9,7 @@ data_simulator(param_tree, dataframe, save = NULL)
 \arguments{
 \item{param_tree}{list of integers needed for the simulation of the phylo object}
 
-\item{dataframe}{data frame composed of 11 columns:
-- nbr_traits: Number of traits simulated with specific parameters
-- class: Type of traits, (continuous, non_eq_nominal(categorical) and ordinal)
-- model: Evolutionary model (BM1, OU1, ARD, SYM, ER, Manual)
-- states: Number of states for discrete traits, (if continuous set it to 1)
--    correlation: Index corresponding to the group of simulated traits which are
-correlated or not to other traits
-- uncorr_traits: Among the "nbr_traits", it's the number of uncorrelated traits
-- fraction_uncorr_traits: Fraction among the "nbr_traits" which are uncorrelated
-- lambda: Integer, Pagel's lambda
-- kappa: Integer, Pagel's kappa
-- highCor: Correlation rate between the trait defined in "manTrait" and the
-simulated traits.
-- manTrait: Index of the trait correlated with the trait(s) simulated according to
-the manual model.}
+\item{dataframe}{data frame composed of 11 columns:}
 
 \item{save}{path to save the data}
 }
@@ -33,4 +19,19 @@ several list of the parameters used for the simulation and the dataframe used as
 }
 \description{
 This function simulates a trait data frame according several parameters.
+
+The parameter \code{dataframe} is composed of 11 columns:
+\itemize{
+\item nbr_traits: Number of traits simulated with specific parameters
+\item class: Type of traits, (continuous, non_eq_nominal(categorical) and ordinal)
+\item model: Evolutionary model (BM1, OU1, ARD, SYM, ER, Manual)
+\item states: Number of states for discrete traits, (if continuous set it to 1)
+\item correlation: Index corresponding to the group of simulated traits which are correlated or not to other traits
+\item uncorr_traits: Among the "nbr_traits", it's the number of uncorrelated traits
+\item fraction_uncorr_traits: Fraction among the "nbr_traits" which are uncorrelated
+\item lambda: Integer, Pagel's lambda
+\item kappa: Integer, Pagel's kappa
+\item highCor: Correlation rate between the trait defined in "manTrait" and the simulated traits.
+\item manTrait: Index of the trait correlated with the trait(s) simulated according to the manual model.
+}
 }

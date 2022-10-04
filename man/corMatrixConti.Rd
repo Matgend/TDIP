@@ -12,7 +12,7 @@ corMatrixConti(discreteTrait, highCor)
 \item{highCor}{numerical, strength of the correlation.}
 }
 \value{
-an vector of continuous variables normally distributed and correlated to the discrete trait.
+A vector of continuous variables normally distributed and correlated to the discrete trait.
 }
 \description{
 This function generates a continuous trait which is correlated to a discrete trait according to a

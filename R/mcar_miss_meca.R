@@ -9,7 +9,7 @@
 #'@param missingRate numerical vector corresponding to the rate of missing value to introduce in the data
 #'@param ds data frame in which NA should be created
 #'@param cols_mis vector of index or columns name where missing values will be created
-#'@return a dataset with NA following a pattern of MCAR.
+#'@return A dataset with NA following a pattern of MCAR.
 #'@export
 mcar_miss_meca <- function(missingRate, ds, cols_mis){
 

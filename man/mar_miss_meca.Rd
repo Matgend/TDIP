@@ -16,7 +16,7 @@ mar_miss_meca(missingRate, ds, cols_mis, cols_ctrl)
 \item{cols_ctrl}{vector of index or columns name which control the creation of missing values (same size of cols_mis)}
 }
 \value{
-a dataset with NA following a pattern of MAR.
+A dataset with NA following a pattern of MAR.
 }
 \description{
 Simulate NaNs in a complete data composed of discrete and continuous traits which are correlated

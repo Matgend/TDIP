@@ -13,7 +13,7 @@
 #' variables
 #' @param tree phylo object
 #' @param hint dataframe already imputed by a comprative methods (Rphylopars for continuous and corHMM for discrete)
-#' @return a data frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the imputation
+#' @return A data frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the imputation
 #' @export
 missForest_phylo <- function(missingData, variance_fraction = 0, maxiter = 10, ntree = 100,
                              mtry = sqrt(ncol(missingData)), tree, hint = NULL){

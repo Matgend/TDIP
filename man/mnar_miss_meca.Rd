@@ -14,7 +14,7 @@ mnar_miss_meca(missingRate, ds, cols_mis)
 \item{cols_mis}{vector of index or columns name where missing value will be created}
 }
 \value{
-a dataset with NA following a pattern of MNAR.
+A dataset with NA following a pattern of MNAR.
 }
 \description{
 Simulate NaNs in a complete data composed of discrete and continuous traits which are correlated

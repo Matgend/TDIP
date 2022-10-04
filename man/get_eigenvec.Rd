@@ -12,7 +12,7 @@ get_eigenvec(tree, variance_fraction)
 \item{variance_fraction}{variance_fraction minimum variance (\%) explained by the eigenvectors}
 }
 \value{
-a data frame in which each column represents an eigenvector
+A data frame in which each column represents an eigenvector
 }
 \description{
 This function calculates the eigenvectors of a phylo object

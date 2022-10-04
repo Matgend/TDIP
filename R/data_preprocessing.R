@@ -8,7 +8,7 @@
 #' @param empData a table of class data.frame. Must have a column named Species
 #' @param empTree a phylogenetic tree, by default empTree = NULL.
 #' @param save path to save the data
-#' @return return a list which mimic the structure of the simulated data list. Contain at least the empirical data as data
+#' @return A list which mimic the structure of the simulated data list. Contain at least the empirical data as data
 #' .frame and the phylogenetic tree as phylo object. The continuous traits are log transformed.
 #' @export
 data_preprocessing <- function(empData, empTree = NULL, save = NULL){

@@ -14,7 +14,7 @@ data_preprocessing(empData, empTree = NULL)
 \item{save}{path to save the data}
 }
 \value{
-return a list which mimic the structure of the simulated data list. Contain at least the empirical data as data
+A list which mimic the structure of the simulated data list. Contain at least the empirical data as data
 .frame and the phylogenetic tree as phylo object. The continuous traits are log transformed.
 }
 \description{

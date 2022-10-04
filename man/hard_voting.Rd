@@ -10,7 +10,7 @@ hard_voting(listOfdataframe)
 \item{listOfdataframe}{list containing dataframes}
 }
 \value{
-return a dataframe
+A dataframe
 }
 \description{
 This function aggregates the output of several imputed dataframes selecting the most recurring value for

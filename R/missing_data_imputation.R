@@ -12,7 +12,7 @@
 #' @param varfrac amount of variance explained by the eigenvectors of the phylogenetic tree (provide only if in strategy
 #' there is "P")
 #' @param save name of the output
-#' @return return a .RData object with the data imputed and all the parameters used for.
+#' @return A list with the data imputed and all the parameters used for.
 #' @export
 missing_data_imputation <- function(ImputationApproachesNames, data, tree = NULL, strategies,
                             varfrac = NULL, save = NULL){

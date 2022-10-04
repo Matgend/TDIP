@@ -23,7 +23,7 @@ transition matrix. By default is TRUE.}
 \item{Ordinal}{simulate ordinal data. Default is FALSE}
 }
 \value{
-list containing morphological evolution for each trait and each species, a matrix Ntrait x Ntrait for simulating
+A list containing morphological evolution for each trait and each species, a matrix Ntrait x Ntrait for simulating
 trait evolution and sigma matrix Ntraits x Ntraits
 }
 \description{

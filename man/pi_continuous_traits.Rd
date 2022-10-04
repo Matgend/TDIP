@@ -12,7 +12,7 @@ pi_continuous_traits(missingData, tree)
 \item{tree}{phylo object}
 }
 \value{
-a data.frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the
+A data.frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the
 imputation
 }
 \description{

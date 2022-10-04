@@ -7,7 +7,7 @@
 corMatrixDisc(nbrState, highCor)
 }
 \arguments{
-\item{highCor}{numerical, strength of the correlation. if nbrState = 3 and highCor = 0.8, the other 2 traits will have
+\item{highCor}{numerical, strength of the correlation. For instance, if nbrState = 3 and highCor = 0.8, the other 2 traits will have
 a correlation of (1-0.8)/(length(states) - 1)}
 
 \item{nbrStates}{integer, providing the number of states to include in the simulated vectors.}
@@ -15,7 +15,7 @@ a correlation of (1-0.8)/(length(states) - 1)}
 \item{states}{vector of the states (unique) present in the discrete vector}
 }
 \value{
-an array of size nbrState * length(states) for which the sum of each row is equal to 1.
+An array of size nbrState * length(states) for which the sum of each row is equal to 1.
 }
 \description{
 This function generates a random array of size nbrState * nbrState for which the sum of each row is equal

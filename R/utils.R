@@ -10,7 +10,7 @@
 #'
 #' @param Tree Phylogeny
 #' @param missingRates numerical vector corresponding to the rate of missing value to introduce in the data
-#' @return vector containing the names of the species that should get NAs for their traits
+#' @return A vector containing the names of the species that should get NAs for their traits
 #'
 getTipsNA <- function (Tree, missingRates){
   Nodes <- ape::Nnode(Tree)
@@ -54,7 +54,7 @@ getTipsNA <- function (Tree, missingRates){
 #' @param uncovTraits number of traits having a covariance equal to 0 with the others.
 #' @param FracNocov fraction of covariance being zero
 #'
-#' @return matrix Ntrait x Ntrait for simulating trait evolution
+#' @return A matrix Ntrait * Ntrait for simulating trait evolution
 simSigma <- function(Ntraits, Cor = NULL, Sigma2 = NULL, uncovTraits = NULL, FracNocov = NULL){
   if(!is.null(Sigma2)){
     if(length(Sigma2) != Ntraits && length(Sigma2) != 1){
@@ -149,7 +149,7 @@ simSigma <- function(Ntraits, Cor = NULL, Sigma2 = NULL, uncovTraits = NULL, Fra
 #' Optional, can be fixed to be equal between all traits by giving one value or
 #' Ntraits*(Ntraits-1)/2
 #'
-#' @return matrix Ntrait x Ntrait for simulating trait evolution
+#' @return A matrix Ntrait * Ntrait for simulating trait evolution
 #'
 simAlpha <- function(Ntraits, alpha = NULL) {
   if(is.null(alpha)){
@@ -191,7 +191,7 @@ simAlpha <- function(Ntraits, alpha = NULL) {
 #' @param equal if TRUE, the transition matrix is equal for all the traits. If FALSE all the traits have a different
 #' transition matrix. By default is TRUE.
 #' @param Ordinal simulate ordinal data. Default is FALSE
-#' @return list containing morphological evolution for each trait and each species, a matrix Ntrait x Ntrait for simulating
+#' @return A list containing morphological evolution for each trait and each species, a matrix Ntrait x Ntrait for simulating
 #' trait evolution and sigma matrix Ntraits x Ntraits
 simDiscreteTraits <- function(Ntraits, Nstates, rate_model, max_rate, tree, equal = TRUE, Ordinal = FALSE){
 
@@ -253,10 +253,9 @@ simDiscreteTraits <- function(Ntraits, Nstates, rate_model, max_rate, tree, equa
 #'
 #' @param values vector of float
 #' @param Nstates number of states of the defined traits
-#' @param subclass - intervals: states are fairly split
-#                  - ordinal: ordered states, split is random
-#                  - non_eq_nominal: split is random, no order (shuffled)
-#' @return return the vector with integer instead of floats
+#' @param subclass intervals: states are fairly split. ordinal: ordered states,
+#' split is random. non_eq_nominal: split is random, no order (shuffled)
+#' @return A vector with integer instead of floats
 ConvertContinousInDiscreteValues <- function(values, Nstates, subclass){
 
   if(subclass != "non_eq_nominal" & subclass != "ordinal" & subclass != "interval" & subclass != "eq_nominal"){
@@ -296,10 +295,9 @@ ConvertContinousInDiscreteValues <- function(values, Nstates, subclass){
 #' @param Matrix array matrix of continuous variables
 #' @param columnsIndex vector of integers mentioning the columns to convert in integers
 #' @param Nstates number of states of the defined traits (could be a vector or a value)
-#' @param subclass - intervals: states are fairly split
-#                  - ordinal: ordered states, split is random
-#                  - non_eq_nominal: split is random, no order (shuffled)
-#' @return return a data frame with the integer variables and continuous variables.
+#' @param subclass intervals: states are fairly split. ordinal: ordered states,
+#' split is random. non_eq_nominal: split is random, no order (shuffled)
+#' @return A data frame with the integer variables and continuous variables.
 ChangeContinuousTraitInDiscrete <- function(Matrix, columnsIndex, Nstates, subclass){
 
   if(length(Nstates) >= 1 && length(Nstates) < length(columnsIndex)){
@@ -332,10 +330,10 @@ ChangeContinuousTraitInDiscrete <- function(Matrix, columnsIndex, Nstates, subcl
 #' @usage corMatrixDisc(nbrState, highCor)
 #'
 #' @param nbrStates integer, providing the number of states to include in the simulated vectors.
-#' @param highCor numerical, strength of the correlation. if nbrState = 3 and highCor = 0.8, the other 2 traits will have
+#' @param highCor numerical, strength of the correlation. For instance, if nbrState = 3 and highCor = 0.8, the other 2 traits will have
 #' a correlation of (1-0.8)/(length(states) - 1)
 #' @param states vector of the states (unique) present in the discrete vector
-#' @return an array of size nbrState * length(states) for which the sum of each row is equal to 1.
+#' @return An array of size nbrState * length(states) for which the sum of each row is equal to 1.
 corMatrixDisc <- function(nbrState, highCor){
   lowCor <- (1 - highCor) / (nbrState - 1)
   ProbMat <- matrix(rep(lowCor, nbrState * nbrState), nbrState, nbrState)
@@ -356,7 +354,7 @@ corMatrixDisc <- function(nbrState, highCor){
 #'
 #' @param discreteTrait vector of integers
 #' @param highCor numerical, strength of the correlation.
-#' @return an vector of continuous variables normally distributed and correlated to the discrete trait.
+#' @return A vector of continuous variables normally distributed and correlated to the discrete trait.
 corMatrixConti <- function(discreteTrait, highCor){
 
   discreteTrait <- as.numeric(discreteTrait)
@@ -387,9 +385,9 @@ corMatrixConti <- function(discreteTrait, highCor){
 #'
 #' @param nbrTraits vector, defining the number of traits (columns)
 #' @param discreteTraits vector from which the simulated traits are correlated
-#' @param highCor numerical, strength of the correlation. if nbrState = 3 and highCor = 0.8, the other 2 traits will have
+#' @param highCor numerical, strength of the correlation. For instance, if nbrState = 3 and highCor = 0.8, the other 2 traits will have
 #'  a correlation of (1-0.8)/(nbrTraits - 1)
-#' @return a data frame of discrete traits where each column is a trait. Discrete traits are factors.
+#' @return A data frame of discrete traits where each column is a trait. Discrete traits are factors.
 corDiscTraitsOneTrait <- function(nbrTraits, discreteTrait, highCor){
 
   #convert discreteTrait
@@ -426,7 +424,7 @@ corDiscTraitsOneTrait <- function(nbrTraits, discreteTrait, highCor){
 #' @param nbrTraits vector, defining the number of traits (columns)
 #' @param discreteTraits vector from which the simulated traits are correlated
 #' @param highCor numerical, strength of the correlation.
-#' @return a data frame of continuous traits where each column is a trait. Continuous traits are numeric.
+#' @return A data frame of continuous traits where each column is a trait. Continuous traits are numeric.
 corContiTraitsOneTrait <- function(nbrTraits, discreteTrait, highCor){
 
   #convert discreteTrait
@@ -458,7 +456,7 @@ corContiTraitsOneTrait <- function(nbrTraits, discreteTrait, highCor){
 #' @usage generateOneHotEncoVariables(NaNData)
 #'
 #' @param NaNData data frame of one or several factors columns
-#' @return a list containing a data frame in which each discrete variable is converted as one hot encoding and vector of
+#' @return A list containing a data frame in which each discrete variable is converted as one hot encoding and vector of
 #' characters.
 generateOneHotEncoVariables <- function(NaNData){
 
@@ -488,7 +486,7 @@ generateOneHotEncoVariables <- function(NaNData){
 #' @param oneHotData data frame of one one hot encoding
 #' @param nativeColNames columns names of the original column names of the one hot encoding(before the conversion in one hot
 #' encoding).
-#' @return a data.frame in which each variable that were one hot encoding are now factors.
+#' @return A data.frame in which each variable that were one hot encoding are now factors.
 convertOneHotEncoIntoFactors <- function(oneHotData, nativeColNames){
 
   #isolate one hot encoding variables

@@ -21,7 +21,7 @@ Optional, can be fixed to be equal for all traits or one value per trait}
 \item{FracNocov}{fraction of covariance being zero}
 }
 \value{
-matrix Ntrait x Ntrait for simulating trait evolution
+A matrix Ntrait * Ntrait for simulating trait evolution
 }
 \description{
 This function generates a variance-covariance matrix for

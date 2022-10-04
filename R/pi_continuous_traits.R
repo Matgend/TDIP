@@ -3,7 +3,7 @@
 #' @usage pi_continuous_traits(missingData, tree)
 #' @param missingData data.frame of 1 or more numeric columns containing NAs
 #' @param tree phylo object
-#' @return a data.frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the
+#' @return A data.frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the
 #' imputation
 #' @export
 pi_continuous_traits <- function(missingData, tree){

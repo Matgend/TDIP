@@ -10,7 +10,7 @@ generateOneHotEncoVariables(NaNData)
 \item{NaNData}{data frame of one or several factors columns}
 }
 \value{
-a list containing a data frame in which each discrete variable is converted as one hot encoding and vector of
+A list containing a data frame in which each discrete variable is converted as one hot encoding and vector of
 characters.
 }
 \description{

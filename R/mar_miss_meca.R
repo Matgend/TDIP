@@ -10,7 +10,7 @@
 #'@param ds dataframe in which NA should be created
 #'@param cols_mis vector of index or columns name where missing value will be created
 #'@param cols_ctrl vector of index or columns name which control the creation of missing values (same size of cols_mis)
-#'@return a dataset with NA following a pattern of MAR.
+#'@return A dataset with NA following a pattern of MAR.
 #'@export
 mar_miss_meca <- function(missingRate, ds, cols_mis, cols_ctrl){
 

@@ -18,7 +18,7 @@ mice_phylo(missingData, nbrMI, variance_fraction = 0, tree, hint = NULL)
 \item{hint}{data frame already imputed by a comparative methods (Rphylopars for continuous and corHMM for discrete)}
 }
 \value{
-a data frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the imputation
+A data frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the imputation
 }
 \description{
 This function imputes missing data for continuous and discrete traits applying the MICE approach using the

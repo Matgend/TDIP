@@ -14,7 +14,7 @@ corContiTraitsOneTrait(nbrTraits, discreteTrait, highCor)
 \item{discreteTraits}{vector from which the simulated traits are correlated}
 }
 \value{
-a data frame of continuous traits where each column is a trait. Continuous traits are numeric.
+A data frame of continuous traits where each column is a trait. Continuous traits are numeric.
 }
 \description{
 This function generates a data frame of continuous traits
