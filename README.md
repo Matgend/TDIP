@@ -148,7 +148,7 @@ for(rdn in 1:length(NaData)){
 }
 ```
 
-# Missing value imputation
+# Missing values imputation
 
 The imputation of missing values can be done by several imputation methods according several strategies. The methods available in the TDIP package are the following:
 
