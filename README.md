@@ -21,7 +21,7 @@ devtools::install_github("Matgend/TDIP")
 2. To use GAIN, `python >= 3.9` needs to be installed as well as the `tensorflow`, `numpy`, `scikit-learn` and `tqdm` packages. The R package `reticulate` provides all the commands needed.
 ```{r, eval = FALSE}
 
-#install R packages
+#install python
 install.packages("reticulate")
 library(reticulate)
 install_miniconda()
@@ -37,7 +37,7 @@ reticulate::py_install(c("tensorflow = 2.9.1", "numpy = 1.22.3", "scikit-learn =
 
 ## Data
 
-Simulated or empirical data can be used.. To simulate a trait dataset, the function `data_simulator()` can be used. The function takes 2 arguments:
+Simulated or empirical data can be used. To simulate a trait dataset, the function `data_simulator()` can be used. The function takes 2 arguments:
 
 1. a dataframe composed of these columns:
 * *nbr_traits*: Number of traits simulated with specific parameters
@@ -152,7 +152,7 @@ for(rdn in 1:length(NaData)){
 
 The imputation of missing values can be done by several imputation methods according several strategies. The methods available in the TDIP package are the following:
 
-1. Phylogenetic imputation method
+1. Phylogenetic imputation methods
 * Rphylopars `pi_continuous_traits_phylo()`
 * corHMM `pi_categorical_traits_phylo()`
 
