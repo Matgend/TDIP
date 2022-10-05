@@ -1,6 +1,6 @@
 # TDIP
 
-Trait Data Imputation with Phylogeny (TDIP) is a package allowing to the imputation of missing values in a trait dataset with the help or not of a phylogenetic tree. By using this package, the user can simulate trait datasets, include missing values according to several missing mechanisms, and / or apply various imputation approaches. 
+Trait Data Imputation with Phylogeny (TDIP) is a package allowing to impute missing values in a trait dataset with the help or not of a phylogenetic tree. By using this package, the user can simulate trait datasets, include missing values according to several missing mechanisms, and / or apply various imputation approaches.
 
 ```{r setup}
 library(TDIP)
@@ -18,7 +18,7 @@ library(devtools)
 devtools::install_github("Matgend/TDIP")
 ```
 
-2. To use GAIN, `python >= 3.9` needs to be installed as well as the `tensorflow`, `numpy`, `scikit-learn` and `tqdm` packages. The R package `reticulate` provides all the commands needed.
+2. To use GAIN, `python >= 3.9` needs to be installed, as well as the `tensorflow`, `numpy`, `scikit-learn` and `tqdm` packages. The R package `reticulate` provides all the commands needed.
 ```{r, eval = FALSE}
 
 #install python
@@ -171,7 +171,7 @@ Each of these methods can be applied according to 3 strategies:
 
 2. With phylogenetic information as eigenvectors
 
-3. "2-step" which consists in using as input the concatenation of the output of the phylogenetic imputation methods with the incomplete data before the missing values imputation.
+3. "2-step" which consists in using as input the concatenation of the output of the phylogenetic imputation methods with the incomplete data before the missing value imputation.
 
 The function `missing_data_imputation()` provides a way to impute missing values through several imputation approaches and strategies. Each imputation method can be called separately too.
 ```{r, results = "hide"}
@@ -207,7 +207,7 @@ hv <- hard_voting(listOfdataframe = datasets)
 
 ## Error calculation
 
-The error calculation is the root mean square error (RMSE) for continuous variables and for categorical variables, is the proportion of falsely classified entries (PFC).
+The error calculation is the root mean square error (RMSE) for continuous variables, whereas for categorical variables, it is the proportion of falsely classified entries (PFC).
 ```{r}
 
 #compute error for a data containing MCAR imputed by missForest
