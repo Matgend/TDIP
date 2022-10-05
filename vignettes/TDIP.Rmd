@@ -13,7 +13,8 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-Trait Data Imputation with Phylogeny (TDIP) is a package allowing to the imputation of missing values in a trait dataset with the help or not of a phylogenetic tree. By using this package, the user can simulate trait datasets, include missing values according to several missing mechanisms, and / or apply various imputation approaches. 
+
+Trait Data Imputation with Phylogeny (TDIP) is a package allowing to impute missing values in a trait dataset with the help or not of a phylogenetic tree. By using this package, the user can simulate trait datasets, include missing values according to several missing mechanisms, and / or apply various imputation approaches.
 
 ```{r setup}
 library(TDIP)
@@ -22,7 +23,7 @@ library(naniar)
 
 ## Installation
 
-TDIP uses R and python. All the package needed can be installed via R.  
+TDIP uses R and Python. All the packages needed can be installed via R.
 
 1. Install TDIP directly from Github using devtools
 ```{r, eval = FALSE}
@@ -31,7 +32,7 @@ library(devtools)
 devtools::install_github("Matgend/TDIP")
 ```
 
-2. To use GAIN, `python >= 3.9` needs to be installed as well as the `tensorflow`, `numpy`, `scikit-learn` and `tqdm` packages. The R package `reticulate` provides all the commands needed.
+2. To use GAIN, `python >= 3.9` needs to be installed, as well as the `tensorflow`, `numpy`, `scikit-learn` and `tqdm` packages. The R package `reticulate` provides all the commands needed.
 ```{r, eval = FALSE}
 
 #install python
@@ -54,10 +55,10 @@ Simulated or empirical data can be used. To simulate a trait dataset, the functi
 
 1. a dataframe composed of these columns:
 * *nbr_traits*: Number of traits simulated with specific parameters
-* *class*: Type of traits, (continuous, non_eq_nominal(categorical) and ordinal)
+* *class*: Type of traits (continuous, non_eq_nominal(categorical) and ordinal)
 * *model*: Evolutionary model (BM1, OU1, ARD, SYM, ER, Manual)
 * *states*: Number of states for discrete traits, (if continuous set it to 1)
-* *correlation*: Index corresponding to the group of simulated traits which are correlated or not to other traits
+* *correlation*: Index corresponding to the group of simulated traits which are correlated or not with other traits
 * *uncorr_traits*: Among the "nbr_traits", it's the number of uncorrelated traits
 * *fraction_uncorr_traits*: Fraction among the "nbr_traits" which are uncorrelated
 * *lambda*: Pagel's lambda
@@ -80,7 +81,7 @@ simData <- data_simulator(param_tree = param_tree,
 #head(simData$FinalData)
 ```
 
-For an empirical dataset, you can use the function `data_preprocessing()` to convert all the character columns in factors and to create a list containing the dataset and the phylogenetic tree if provided.
+For an empirical dataset, you can use the function `data_preprocessing()` to convert all the character columns into factors and to create a list containing the dataset and the phylogenetic tree if provided.
 ```{r}
 
 data(simulatedData)
@@ -163,7 +164,7 @@ for(rdn in 1:length(NaData)){
 
 ## Missing value imputation
 
-The imputation of missing values can be done by several imputation methods according several strategies. The methods available in the TDIP package are the following:
+The imputation of missing values can be done by several imputation methods according to several strategies. The methods available in the TDIP package are the following:
 
 1. Phylogenetic imputation methods
 * Rphylopars `pi_continuous_traits_phylo()`
@@ -178,13 +179,13 @@ The imputation of missing values can be done by several imputation methods accor
 * GAIN `gain_phylo()`
 * Polytomous regression `mice_phylo()`
 
-Each of these methods can be applied according 3 strategies: 
+Each of these methods can be applied according to 3 strategies:
 
 1. No phylogenetic information
 
 2. With phylogenetic information as eigenvectors
 
-3. "2-step" which consists in using as input the concatenation of the output of the phylogenetic imputation methods with the incomplete data before the missing values imputation.
+3. "2-step" which consists in using as input the concatenation of the output of the phylogenetic imputation methods with the incomplete data before the missing value imputation.
 
 The function `missing_data_imputation()` provides a way to impute missing values through several imputation approaches and strategies. Each imputation method can be called separately too.
 ```{r, results = "hide"}
@@ -220,7 +221,7 @@ hv <- hard_voting(listOfdataframe = datasets)
 
 ## Error calculation
 
-The error calculation is the root mean square error (RMSE) for continuous variables and for categorical variables, is the proportion of falsely classified entries (PFC).
+The error calculation is the root mean square error (RMSE) for continuous variables, whereas for categorical variables, it is the proportion of falsely classified entries (PFC).
 ```{r}
 
 #compute error for a data containing MCAR imputed by missForest
