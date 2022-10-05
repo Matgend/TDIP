@@ -9,7 +9,7 @@ library(naniar)
 
 ## Installation
 
-TDIP uses R and python. All the package needed can be installed via R. 
+TDIP uses R and Python. All the packages needed can be installed via R.
 
 1. Install TDIP directly from Github using devtools
 ```{r, eval = FALSE}
@@ -41,7 +41,7 @@ Simulated or empirical data can be used. To simulate a trait dataset, the functi
 
 1. a dataframe composed of these columns:
 * *nbr_traits*: Number of traits simulated with specific parameters
-* *class*: Type of traits, (continuous, non_eq_nominal(categorical) and ordinal)
+* *class*: Type of traits (continuous, non_eq_nominal(categorical) and ordinal)
 * *model*: Evolutionary model (BM1, OU1, ARD, SYM, ER, Manual)
 * *states*: Number of states for discrete traits, (if continuous set it to 1)
 * *correlation*: Index corresponding to the group of simulated traits which are correlated or not with other traits
@@ -68,7 +68,7 @@ simData <- data_simulator(param_tree = param_tree,
 ```
 
 
-For an empirical dataset, you can use the function `data_preprocessing()` to convert all the character columns in factors and to create a list containing the dataset and the phylogenetic tree if provided.
+For an empirical dataset, you can use the function `data_preprocessing()` to convert all the character columns into factors and to create a list containing the dataset and the phylogenetic tree if provided.
 ```{r}
 
 data(simulatedData)
@@ -148,9 +148,9 @@ for(rdn in 1:length(NaData)){
 }
 ```
 
-## Missing values imputation
+## Missing value imputation
 
-The imputation of missing values can be done by several imputation methods according several strategies. The methods available in the TDIP package are the following:
+The imputation of missing values can be done by several imputation methods according to several strategies. The methods available in the TDIP package are the following:
 
 1. Phylogenetic imputation methods
 * Rphylopars `pi_continuous_traits_phylo()`
@@ -165,7 +165,7 @@ The imputation of missing values can be done by several imputation methods accor
 * GAIN `gain_phylo()`
 * Polytomous regression `mice_phylo()`
 
-Each of these methods can be applied according 3 strategies: 
+Each of these methods can be applied according to 3 strategies:
 
 1. No phylogenetic information
 
@@ -217,6 +217,5 @@ errors <- imputation_error(imputedData = imputedData$MissForest_NP,
                            imputationApproachesName = methods[2], 
                            dataframe = simData$Dataframe)
 ```
-
 
 
