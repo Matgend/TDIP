@@ -188,11 +188,11 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
         ContinuousData <- as.data.frame(ContinuousData)
         colnames(ContinuousData) <- sprintf("F%s.%s/%s", 1:subdataOne$nbr_traits, i, subdataOne$row)
 
-        if(subdata$class == "continuous"){
+        if(any(subdataOne$class == "continuous")){
           FinalData <- cbind(FinalData, ContinuousData)
         }
 
-        if(subdata$class != "continuous"){
+        if(any(subdataOne$class != "continuous")){
           indexColumConvert <- 1:subdataOne$nbr_traits
           Nstates <- rep(subdataOne$states, subdataOne$nbr_traits)
           class <- rep(subdataOne$class, subdataOne$nbr_traits)
