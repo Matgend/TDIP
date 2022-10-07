@@ -35,9 +35,9 @@ reticulate::use_condaev("EnvironmentName")
 
 #Pip
 reticulate::py_install(c("tensorflow = 2.9.1", "numpy = 1.22.3", "scikit-learn =  1.1.1", "tqdm = 4.64.1"), pip = TRUE)
-#to specify the python path
-py_config() #display the python installation paths
-use_python("path)
+#to specify the Python path
+reticulate::py_config() #displays the Python installation paths
+reticulate::use_python("path")
 
 ```
 
