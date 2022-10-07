@@ -30,9 +30,15 @@ install_miniconda()
 
 #Conda environement
 reticulate::conda_install("EnvironmentName",c("tensorflow = 2.9.1", "numpy = 1.22.3", "scikit-learn =  1.1.1", "tqdm = 4.64.1"))
+#to specify the environment
+reticulate::use_condaev("EnvironmentName")
 
 #Pip
 reticulate::py_install(c("tensorflow = 2.9.1", "numpy = 1.22.3", "scikit-learn =  1.1.1", "tqdm = 4.64.1"), pip = TRUE)
+#to specify the python path
+py_config() #display the python installation paths
+use_python("path)
+
 ```
 
 ## Data
@@ -137,6 +143,7 @@ missing_values <- na_insertion(missingRate = missingRate,
 
 
 #visualize the amount of missing data
+library(visdat)
 NaData <- missing_values$DataNaN
 
 for(rdn in 1:length(NaData)){
