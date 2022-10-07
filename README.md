@@ -151,7 +151,7 @@ for(rdn in 1:length(NaData)){
   partition <- NaData[[rdn]][[1]]
 
   title <- names(partition)
-  plot(vis_miss(partition), main = title)
+  plot(visdat::vis_miss(partition), main = title)
 }
 ```
 
