@@ -10,13 +10,15 @@
 #' @param trueData array of true data
 #' @param missingData array of data with missing values
 #' @param imputationApproachesName character providing the name of the imputed appraoch used
-#' @param dataframe dataframe given information about the data (type of variables, model of evolution, ....)
+#' @param dataframe dataframe given information about the data (type of variables, model of evolution, ....). If NULL, will measure the error of ordinate variables as categorical variables.
 #' @return A data frame with in the first column the trait names and in the second the errors
 #' @export
-imputation_error <- function(imputedData, trueData, missingData, imputationApproachesName, dataframe){
+imputation_error <- function(imputedData, trueData, missingData, imputationApproachesName, dataframe = NULL){
 
   #get the ordinal trait reference
-  ordinalTraits <- which(dataframe$class == "ordinal") #give the row in dataframe which correspond to /n in data names
+  ordinalTraits <- NULL
+  if(!is.null(dataframe))
+    ordinalTraits <- which(dataframe$class == "ordinal") #give the row in dataframe which correspond to /n in data names
   errors <- c()
   traitNames <- c()
   for (c in 1:ncol(missingData)){

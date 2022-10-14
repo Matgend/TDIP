@@ -15,7 +15,7 @@ imputation_error(imputedData, trueData, missingData, imputationApproachesName, d
 
 \item{imputationApproachesName}{character providing the name of the imputed appraoch used}
 
-\item{dataframe}{dataframe given information about the data (type of variables, model of evolution, ....)}
+\item{dataframe}{dataframe given information about the data (type of variables, model of evolution, ....). If NULL, will measure the error of ordinate variables as categorical variables.}
 }
 \value{
 A data frame with in the first column the trait names and in the second the errors
