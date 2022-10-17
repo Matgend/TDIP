@@ -78,8 +78,31 @@ mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, hint = N
       list(imputedData = imputedData, parameters = parameters)
     },
     error = function(cond){
-      print("MICE doesn't work")
-      list(imputedData = nativeMissingData, parameters = "Collinearity induces imputation error")
+
+      ImputedMICE <- mice::mice(missingData, m = nbrMI, maxit = 5, method = method,
+                                                          printFlag = FALSE,
+                                                          pred = mice::quickpred(missingData, mincor = 0.1, minpuc = 0, include = "", exclude = "",
+                                                                           method = "pearson"))
+
+
+      #choose the first column
+      imputedData <- mice::complete(ImputedMICE, action = 1L)[, 1:length(colNames),  drop = FALSE]
+      names(imputedData) <- colNames
+
+      colWithNaN <-  which(colSums(is.na(imputedData)) != 0)
+      if(length(colWithNaN) != 0){
+        for(v in names(colWithNaN)){
+          ry <- !is.na(imputedData[ ,v])
+          print(paste("random imputation of column:", v))
+          imputedData[which(!ry) ,v] <- mice::mice.impute.sample(imputedData[ ,v], ry)
+        }
+      }
+
+      parameters <- list(nbrMI = nbrMI)
+      list(imputedData = imputedData, parameters = parameters)
+
+      #print("MICE doesn't work")
+      #list(imputedData = nativeMissingData, parameters = "Collinearity induces imputation error")
     }
   )
   return(ImputedMICE)
