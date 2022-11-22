@@ -81,7 +81,7 @@ mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, hint = N
 
       ImputedMICE <- mice::mice(missingData, m = nbrMI, maxit = 5, method = method,
                                                           printFlag = FALSE,
-                                                          pred = mice::quickpred(missingData, mincor = 0.1, minpuc = 0, include = "", exclude = "",
+                                                          pred = mice::quickpred(missingData, mincor = 0.5, minpuc = 0, include = "", exclude = "",
                                                                            method = "pearson"))
 
 
