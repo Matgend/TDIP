@@ -17,8 +17,9 @@ imputation_error <- function(imputedData, trueData, missingData, imputationAppro
 
   #get the ordinal trait reference
   ordinalTraits <- NULL
-  if(!is.null(dataframe))
+  if(!is.null(dataframe)){
     ordinalTraits <- which(dataframe$class == "ordinal") #give the row in dataframe which correspond to /n in data names
+  }
   errors <- c()
   traitNames <- c()
   for (c in 1:ncol(missingData)){
