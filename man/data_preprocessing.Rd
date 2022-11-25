@@ -11,6 +11,8 @@ data_preprocessing(empData, empTree = NULL)
 
 \item{empTree}{a phylogenetic tree, by default empTree = NULL.}
 
+\item{no.conv.factor}{index of columns to not convert in factor but are characters or integers}
+
 \item{save}{path to save the data}
 }
 \value{
@@ -19,5 +21,5 @@ A list which mimic the structure of the simulated data list. Contain at least th
 }
 \description{
 This function saves an empirical dataset and a phylogeny in a list of the same structure like when the data
-is simulated and converts the character and integer columns as factors.
+is simulated and converts the character and integer columns as factors. All the continuous traits that don't contain negative value are log transformed.
 }

@@ -1,17 +1,18 @@
 #' @title Empirical data and phylogeny in R list
 #'
 #' @description This function saves an empirical dataset and a phylogeny in a list of the same structure like when the data
-#' is simulated and converts the character and integer columns as factors.
+#' is simulated and converts the character and integer columns as factors. All the continuous traits that don't contain negative value are log transformed.
 #'
 #' @usage data_preprocessing(empData, empTree = NULL)
 #'
 #' @param empData a table of class data.frame. Must have a column named Species
 #' @param empTree a phylogenetic tree, by default empTree = NULL.
+#' @param no.conv.factor index of columns to not convert in factor but are characters or integers
 #' @param save path to save the data
 #' @return A list which mimic the structure of the simulated data list. Contain at least the empirical data as data
 #' .frame and the phylogenetic tree as phylo object. The continuous traits are log transformed.
 #' @export
-data_preprocessing <- function(empData, empTree = NULL, save = NULL){
+data_preprocessing <- function(empData, empTree = NULL, no.conv.factor = NULL, save = NULL){
 
   empData <- as.data.frame(empData)
 
@@ -36,10 +37,13 @@ data_preprocessing <- function(empData, empTree = NULL, save = NULL){
 
   #convert character and integer variables as factors
   classVar <- lapply(empData, class)
-  indexInFactor <- which(classVar == "integer" | classVar == "character" | classVar == "factor")
-  empData[indexInFactor] <- lapply(empData[indexInFactor], factor)
 
-  indexInFactor
+  indexInFactor <- which(classVar == "integer" | classVar == "character" | classVar == "factor")
+
+  if(!is.null(no.conv.factor)){
+    indexInFactor <- indexInFactor[-which(indexInFactor %in% no.conv.factor)]
+  }
+  empData[indexInFactor] <- lapply(empData[indexInFactor], factor)
 
   #log transform the continuous traits
   indexConti <- which(!1:ncol(empData) %in% indexInFactor)
