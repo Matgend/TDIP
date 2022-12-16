@@ -9,19 +9,31 @@
 #' @param data dataframe containing NAs
 #' @param tree phylo object
 #' @param strategies character vector "NP", "P", "2-step"
+#' @param maxit maxit maximum number of iteration (mice)
+#' @param nbrMI integer, mentioning the total number of imputations (mice)
+#' @param mincor minimal correlation for prediction matrix in mice
+#' @param k integer, number of nearest neighbors used (kNN)
+#' @param numFun numFun: function for aggregating the kNN in the case of a numerical variable
+#' @param catFun catFun: function for aggregating the kNN in the case of a categorical variable
 #' @param varfrac amount of variance explained by the eigenvectors of the phylogenetic tree (provide only if in strategy
 #' there is "P")
 #' @param save name of the output
 #' @return A list with the data imputed and all the parameters used for.
 #' @export
-missing_data_imputation <- function(ImputationApproachesNames, data, tree = NULL, strategies,
-                            varfrac = NULL, save = NULL){
+missing_data_imputation <- function(ImputationApproachesNames,
+                                    data,
+                                    tree = NULL,
+                                    strategies,
+                                    maxit = 5,
+                                    nbrMI = 1,
+                                    k = 3,
+                                    numFun = laeken::weightedMedian,
+                                    catFun = VIM::maxCat,
+                                    mincor = NULL,
+                                    varfrac = NULL,
+                                    save = NULL){
 
-  #variables to define for imputation
-  nbrMI <- 1
-  k <- 2
-  numFun <- laeken::weightedMedian
-  catFun <- VIM::maxCat
+
   hint <- NULL
 
   strategies <- sort(strategies) #order is "2-step", "NP", "P"
@@ -102,9 +114,10 @@ missing_data_imputation <- function(ImputationApproachesNames, data, tree = NULL
       variance_fraction <- 2
     }
 
+    mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, maxit = 5, mincor = NULL,  hint = NULL)
 
     MixedImputationApproaches <- list("mice_phylo", list(data, nbrMI,
-                                                         variance_fraction, tree, hint),
+                                                         variance_fraction, tree, maxit, mincor, hint),
                                       "missForest_phylo", list(data, variance_fraction,
                                                                maxiter = 10, ntree = 100,
                                                                mtry = floor(ncol(data)/3), tree, hint),

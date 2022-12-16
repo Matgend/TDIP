@@ -32,6 +32,7 @@ Imports:
     missMethods,
     mltools,
     mvMORPH,
+    NADIA,
     phangorn,
     phytools,
     PVR,

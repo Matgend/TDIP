@@ -5,7 +5,7 @@
 #' @usage kNN_phylo(missingData, k, numFun, catFun, variance_fraction = 0, tree, hint = NULL)
 #'
 #' @param missingData data frame of 1 or more columns containing NAs
-#' @param k integer, number of nearest neighbours used
+#' @param k integer, number of nearest neighbors used
 #' @param numFun numFun: function for aggregating the kNN in the case of a numerical variable
 #' @param catFun catFun: function for aggregating the kNN in the case of a categorical variable
 #' @param variance_fraction variance_fraction minimum variance (%) explained by the eigenvectors

@@ -435,7 +435,10 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
     ThetasList[[i]] <- Thetas
     SigmasList[[i]] <- Sigmas
     TreeList[[i]] <- SimTree
-    manualParamList[[i]] <- manualParam
+
+    if(any("Manual" %in% subdata$model)){
+      manualParamList[[i]] <- manualParam
+    }
 
     row.names(FinalData) <- SimTree$tip.label
 

@@ -10,10 +10,12 @@
 #' @param nbrMI integer, mentioning the total number of imputations
 #' @param variance_fraction variance_fraction minimum variance (%) explained by the eigenvectors
 #' @param tree phylo object
+#' @param maxit maxit maximum number of iteration
+#' @param mincor minimal correlation for prediction matrix
 #' @param hint data frame already imputed by a comparative methods (Rphylopars for continuous and corHMM for discrete)
 #' @return A data frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the imputation
 #' @export
-mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, hint = NULL){
+mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, maxit = 5, mincor = NULL,  hint = NULL){
 
   colNames <- names(missingData)
   nativeMissingData <- missingData
@@ -34,34 +36,26 @@ mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, hint = N
   }
   names(missingData) <- paste0("A",as.character(1:ncol(missingData)))
 
+  #check the number of levels for factors
+  levelsByColumns <- lapply(missingData, levels)
+  lengthLevels <- lapply(levelsByColumns, length)
+  columnsCatPMM <- as.numeric(lengthLevels > 20) #in literature said that in case nbr state > 20 use pmm instead of polyreg
+  columnsLogReg <- as.numeric(lengthLevels == 2)
+
+  method <- NULL
+
+  if(sum(columnsCatPMM) != 0){
+    method <- rep("polyreg", length(columnsCatPMM))
+    method[which(columnsCatPMM == 1 | as.numeric(lengthLevels == 0) == 1)] <- "pmm"
+    method[which(columnsLogReg == 1)] <- "logreg"
+  }
+
   #in case collinearity is too important, and MICE can't impute the data
   ImputedMICE <- tryCatch(
     {
 
-      #check the number of levels for factors
-      levelsByColumns <- lapply(missingData, levels)
-      lengthLevels <- lapply(levelsByColumns, length)
-      columnsCatPMM <- as.numeric(lengthLevels > 20) #in literature said that in case nbr state > 20 use pmm instead of polyreg
-      columnsLogReg <- as.numeric(lengthLevels == 2)
+      ImputedMICE <- NADIA::mice(missingData, m = nbrMI, maxit = maxit, method = method)
 
-      method <- NULL
-
-      if(sum(columnsCatPMM) != 0){
-        method <- rep("polyreg", length(columnsCatPMM))
-        method[which(columnsCatPMM == 1 | as.numeric(lengthLevels == 0) == 1)] <- "pmm"
-        method[which(columnsLogReg == 1)] <- "logreg"
-      }
-
-      # ImputedMICE <- mice::mice(missingData, m = nbrMI, maxit = 5, method = method,
-      #                           printFlag = FALSE,
-      #                           pred = mice::quickpred(missingData, mincor = 0.1, minpuc = 0, include = "", exclude = "",
-      #                                            method = "pearson"))
-
-      ImputedMICE <- mice::mice(missingData, m = nbrMI, maxit = 5, method = method,
-                                printFlag = FALSE)
-
-
-      #choose the first column
       imputedData <- mice::complete(ImputedMICE, action = 1L)[, 1:length(colNames),  drop = FALSE]
       names(imputedData) <- colNames
 
@@ -79,13 +73,16 @@ mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, hint = N
     },
     error = function(cond){
 
+
+      if(is.null(mincor)){
+        mincor <- 0.5
+      }
       ImputedMICE <- mice::mice(missingData, m = nbrMI, maxit = 5, method = method,
                                                           printFlag = FALSE,
-                                                          pred = mice::quickpred(missingData, mincor = 0.5, minpuc = 0, include = "", exclude = "",
+                                                          pred = mice::quickpred(missingData, mincor = mincor, minpuc = 0, include = "", exclude = "",
                                                                            method = "pearson"))
 
 
-      #choose the first column
       imputedData <- mice::complete(ImputedMICE, action = 1L)[, 1:length(colNames),  drop = FALSE]
       names(imputedData) <- colNames
 
@@ -105,5 +102,9 @@ mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, hint = N
       #list(imputedData = nativeMissingData, parameters = "Collinearity induces imputation error")
     }
   )
+
+
+
+
   return(ImputedMICE)
 }
