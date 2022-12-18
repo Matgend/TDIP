@@ -114,8 +114,6 @@ missing_data_imputation <- function(ImputationApproachesNames,
       variance_fraction <- 2
     }
 
-    mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, maxit = 5, mincor = NULL,  hint = NULL)
-
     MixedImputationApproaches <- list("mice_phylo", list(data, nbrMI,
                                                          variance_fraction, tree, maxit, mincor, hint),
                                       "missForest_phylo", list(data, variance_fraction,
