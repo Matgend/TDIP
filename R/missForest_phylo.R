@@ -65,7 +65,7 @@ missForest_phylo <- function(missingData, variance_fraction = 0, maxiter = 10, n
   }
 
   #run missForest
-  missForest_imputation <- NADIA::autotune_missForest(df = missingData, maxiter = maxiter,
+  missForest_imputation <- missForest::missForest(xmis = missingData, maxiter = maxiter,
                                                   ntree = ntree, mtry = mtry, verbose = TRUE)
 
   #cut eigenvectors columns
