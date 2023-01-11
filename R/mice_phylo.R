@@ -54,7 +54,8 @@ mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, maxit = 
   ImputedMICE <- tryCatch(
     {
 
-      ImputedMICE <- NADIA::mice(missingData, m = nbrMI, maxit = maxit, method = method)
+      ImputedMICE <- mice::mice(missingData, m = nbrMI, maxit = maxit, method = method,
+                                printFlag = FALSE)
 
       imputedData <- mice::complete(ImputedMICE, action = 1L)[, 1:length(colNames),  drop = FALSE]
       names(imputedData) <- colNames

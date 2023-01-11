@@ -452,20 +452,19 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
     if(length(grep("I.", colnames(FinalData))) > 0){
       #convert the discrete columns in factors
       DiscreteIndex <- grep("I.", colnames(FinalData))
-      FinalData[ ,DiscreteIndex] <- lapply(FinalData[ ,DiscreteIndex], factor)
+      FinalData[ ,DiscreteIndex] <- lapply(FinalData[ ,DiscreteIndex, drop = FALSE], factor)
 
       #add levels in factor if number of levels = 1
-      for (c in 1:ncol(FinalData[ ,DiscreteIndex])){
-        if(length(levels(FinalData[ ,DiscreteIndex][,c])) == 1){
-          if(levels(FinalData[ ,DiscreteIndex][,c]) == "0"){
-            FinalData[ ,DiscreteIndex][,c] <- factor(FinalData[ ,DiscreteIndex][,c], levels = c("0", "1"))
+      for (c in 1:length(DiscreteIndex)){
+        if(length(levels(FinalData[ , DiscreteIndex[c]])) == 1){
+          if(levels(FinalData[ , DiscreteIndex[c]]) == "0"){
+            FinalData[ , DiscreteIndex[c]] <- factor(FinalData[ , DiscreteIndex[c]], levels = c("0", "1"))
           }
           else{
-            colName <- names(FinalData[ ,DiscreteIndex])[c]
+            colName <- names(FinalData[ , DiscreteIndex[c], drop = FALSE])
             row <- as.numeric(str_extract(colName, "(?<=\\/)\\d+"))
             Nstates <- dataframe[row, "states"]
-            FinalData[ ,DiscreteIndex][,c] <- factor(FinalData[ ,DiscreteIndex][,c],
-                                                     levels = as.character(0:(Nstates-1)))
+            FinalData[ , DiscreteIndex[c]] <- factor(FinalData[ , DiscreteIndex[c]], levels = as.character(0:(Nstates-1)))
           }
         }
       }
