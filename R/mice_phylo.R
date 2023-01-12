@@ -54,8 +54,21 @@ mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, maxit = 
   ImputedMICE <- tryCatch(
     {
 
-      ImputedMICE <- mice::mice(missingData, m = nbrMI, maxit = maxit, method = method,
-                                printFlag = FALSE)
+
+      if(is.null(mincor)){
+        mincor <- 0.5
+      }
+      ImputedMICE <- mice::mice(missingData,
+                                m = nbrMI,
+                                maxit = 5,
+                                method = method,
+                                printFlag = FALSE,
+                                pred = mice::quickpred(missingData,
+                                                       mincor = mincor,
+                                                       minpuc = 0,
+                                                       include = "",
+                                                       exclude = "",
+                                                       method = "pearson"))
 
       imputedData <- mice::complete(ImputedMICE, action = 1L)[, 1:length(colNames),  drop = FALSE]
       names(imputedData) <- colNames
@@ -74,15 +87,9 @@ mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, maxit = 
     },
     error = function(cond){
 
-
-      if(is.null(mincor)){
-        mincor <- 0.5
-      }
-      ImputedMICE <- mice::mice(missingData, m = nbrMI, maxit = 5, method = method,
-                                                          printFlag = FALSE,
-                                                          pred = mice::quickpred(missingData, mincor = mincor, minpuc = 0, include = "", exclude = "",
-                                                                           method = "pearson"))
-
+      print("Error, second try in MICE")
+      ImputedMICE <- mice::mice(missingData, m = nbrMI, maxit = maxit, method = method,
+                                printFlag = FALSE)
 
       imputedData <- mice::complete(ImputedMICE, action = 1L)[, 1:length(colNames),  drop = FALSE]
       names(imputedData) <- colNames
