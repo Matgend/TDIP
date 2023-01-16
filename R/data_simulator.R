@@ -7,7 +7,7 @@
 #' @description The parameter `dataframe` is composed of 11 columns:
 #' * nbr_traits: Number of traits simulated with specific parameters
 #' * class: Type of traits, (continuous, non_eq_nominal(categorical) and ordinal)
-#' * model: Evolutionary model (BM1, OU1, ARD, SYM, ER, Manual)
+#' * model: Evolutionary model (BM1, OU1, ARD, SYM, ER, Na)
 #' * states: Number of states for discrete traits, (if continuous set it to 1)
 #' * correlation: Index corresponding to the group of simulated traits which are correlated or not to other traits
 #' * uncorr_traits: Among the "nbr_traits", it's the number of uncorrelated traits
@@ -15,7 +15,7 @@
 #' * lambda: Integer, Pagel's lambda
 #' * kappa: Integer, Pagel's kappa
 #' * highCor: Correlation rate between the trait defined in "manTrait" and the simulated traits.
-#' * manTrait: Index of the trait correlated with the trait(s) simulated according to the manual model.
+#' * manTrait: Index of the trait correlated with other traits.
 #' @param param_tree list of integers needed for the simulation of the phylo object
 #' @param dataframe data frame composed of 11 columns:
 #' @param save path to save the data
@@ -57,7 +57,7 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
   dataframe$model[stringr::str_detect(dataframe$model, "^[eE]")] <- "ER"
   dataframe$model[stringr::str_detect(dataframe$model, "^[sS]")] <- "SYM"
   dataframe$model[stringr::str_detect(dataframe$model, "^[aA]")] <- "ARD"
-  dataframe$model[stringr::str_detect(dataframe$model, "^[mM]")] <- "Manual"
+  dataframe$model[stringr::str_detect(dataframe$model, "^[nN]")] <- "Na"
 
 
   #Check if all the rows are filled correctly
@@ -108,9 +108,8 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
   ThetasList <- list()
   SigmasList <- list()
   TreeList <- list()
-  manualParamList <- list()
+  NaParamList <- list()
   for(i in correlation_values){
-    subdataTree <- SimTree
     wrong <- which(sum(dataframe$correlation == i) == 1 & dataframe$correlation == i & dataframe$class != "continuous"
                    & dataframe$uncorr_traits != dataframe$nbr_traits &
                      dataframe$fraction_uncorr_traits != 0 & (dataframe$model != "OU1" | dataframe$model != "BM1"))
@@ -127,41 +126,42 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
     #build a subset of traits being correlated together
     subdata <- subset(dataframe, dataframe$correlation == i)
 
-
-
     #extract rows in the dataframe corresponding to correlation group
     rows <- which(dataframe$correlation == i)
     #append row number in dataframe
     subdata <- cbind(subdata, rows)
 
-    #rescale phylogeny
-    lambdaCheck <- mean(subdata$lambda)
-    kappaCheck <- mean(subdata$kappa)
-
-    if(lambdaCheck != 0 & kappaCheck != 0 & lambdaCheck != 1 & kappaCheck != 1){
-      stop("lambda or kappa should be equal to 1")
-    }
-
-    if(lambdaCheck != 1){
-      subdataTree <- geiger::rescale(SimTree, "lambda", lambdaCheck)
-    }
-
-    if(kappaCheck != 1){
-      subdataTree <- geiger::rescale(SimTree, "kappa", kappaCheck)
-    }
+    # #rescale phylogeny
+    # lambdaCheck <- mean(subdata$lambda)
+    # kappaCheck <- mean(subdata$kappa)
+    #
+    # if(lambdaCheck != 0 & kappaCheck != 0 & lambdaCheck != 1 & kappaCheck != 1){
+    #   stop("lambda or kappa should be equal to 1")
+    # }
+    #
+    # if(lambdaCheck != 1){
+    #   subdataTree <- geiger::rescale(SimTree, "lambda", lambdaCheck)
+    # }
+    #
+    # if(kappaCheck != 1){
+    #   subdataTree <- geiger::rescale(SimTree, "kappa", kappaCheck)
+    # }
 
     #check fraction of uncorrelated
     if(sum(subdata$fraction_uncorr_traits) != subdata$fraction_uncorr_traits[1] * nrow(subdata)){
       stop("The fraction of uncorrelated trait should be equal within the same group of correlated traits")
     }
 
-    if(nrow(subdata) == 1 | (nrow(subdata) - sum(subdata$model == "Manual") == 1)){
+    if(nrow(subdata) == 1 | (nrow(subdata) - sum(subdata$model == "Na") == 1)){
 
-      if(nrow(subdata) == 1 && subdata$model == "Manual"){
-        stop("When model is MANUAL, the traits should be correlated with another trait \n")
+      if(nrow(subdata) == 1 && subdata$model == "Na"){
+        stop("When model is Na, the traits should be correlated with another trait \n")
       }
 
-      subdataOne <- subset(subdata, subdata$model != "Manual")
+      subdataOne <- subset(subdata, subdata$model != "Na")
+
+      #rescale tree
+      subdataTree <- rescaleTree(SimTree, subdataOne)
 
       Sigmas <- simSigma(subdataOne$nbr_traits, uncovTraits = subdataOne$uncorr_traits,
                          FracNocov = subdataOne$fraction_uncorr_traits)
@@ -177,11 +177,11 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
 
         #simulate independent continuous traits
         ContinuousData <- mvMORPH::mvSIM(tree = subdataTree,
-                                model = subdataOne$model,
-                                param = list(ntraits = subdataOne$nbr_traits,
-                                             theta = Thetas, #theta = ancestral states
-                                             sigma = Sigmas,
-                                             alpha = Alphas))
+                                         model = subdataOne$model,
+                                         param = list(ntraits = subdataOne$nbr_traits,
+                                                      theta = Thetas, #theta = ancestral states
+                                                      sigma = Sigmas,
+                                                      alpha = Alphas))
 
 
         #change columns names
@@ -247,9 +247,9 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
       }
     }
 
-    if(nrow(subdata) > 1 & (nrow(subdata) - sum(subdata$model == "Manual") > 1)){
+    if(nrow(subdata) > 1 & (nrow(subdata) - sum(subdata$model == "Na") > 1)){
       #check if the dataframe is correctly filled
-      wrong <- which(subdata$model != "BM1" & subdata$model != "OU1" | subdata$lambda != lambdaCheck)
+      wrong <- which(subdata$model != "BM1" & subdata$model != "OU1")
       if(length(wrong) != 0){
         stop(paste("This line ", wrong, "is not filled correctly \n"))
       }
@@ -293,13 +293,16 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
         model <- "OU1"
       }
 
+
+      #rescale tree
+      subdataTree <- rescaleTree(SimTree, subdata)
+
       #Simulate data
       ContinuousData <- mvMORPH::mvSIM(tree = subdataTree,
                                        model = model,
                                        param = list(ntraits = Ntraits,
                                                     theta = Thetas, #theta = ancestral states
                                                     alpha = Alphas))
-
 
 
       #If correlated discrete traits from continuous traits
@@ -375,55 +378,55 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
       }
     } #close condition if subdata >2
 
-    if(any("Manual" %in% subdata$model)){
+    if(any("Na" %in% subdata$model)){
 
-      manualRow <- which(subdata$model == "Manual")
-      manualParam <- c()
-      for(mR in 1:length(manualRow)){
+      NaRow <- which(subdata$model == "Na")
+      NaParam <- c()
+      for(mR in 1:length(NaRow)){
 
-        if(subdata$states[which(subdata$model == "Manual" & subdata$class != "continuous")] !=
-           subdata$states[which(subdata$model != "Manual")]){
-          stop("The MANUAL trait must have the same number of states that the correlated discrete trait.")
+        if(subdata$states[which(subdata$model == "Na" & subdata$class != "continuous")] !=
+           subdata$states[which(subdata$model != "Na")]){
+          stop("The Na trait must have the same number of states that the correlated discrete trait.")
         }
 
-        manTraitValue <- subdata$manTrait[manualRow[mR]]
+        manTraitValue <- subdata$manTrait[NaRow[mR]]
 
         if(manTraitValue == 0){
           manTraitValue <- sample(ncol(FinalData), 1)
         }
 
 
-        if(subdata$class[manualRow[mR]] != "continuous"){
+        if(subdata$class[NaRow[mR]] != "continuous"){
 
-          DiscreteData <- corDiscTraitsOneTrait(subdata$nbr_traits[manualRow[mR]],
+          DiscreteData <- corDiscTraitsOneTrait(subdata$nbr_traits[NaRow[mR]],
                                                 FinalData[, manTraitValue],
-                                                subdata$highCor[manualRow[mR]])$data
+                                                subdata$highCor[NaRow[mR]])$data
 
-          manualParam <- c(manualParam, DiscreteData$param)
+          NaParam <- c(NaParam, DiscreteData$param)
 
           #change columns names
           colnames(DiscreteData) <- sprintf("I%s.%s/%s",
-                                            seq(1:subdata$nbr_traits[manualRow[mR]]),
+                                            seq(1:subdata$nbr_traits[NaRow[mR]]),
                                             i,
-                                            subdata$row[manualRow[mR]])
+                                            subdata$row[NaRow[mR]])
 
           FinalData <- cbind(FinalData, DiscreteData)
         }
 
 
-        if(subdata$class[manualRow[mR]] == "continuous"){
+        if(subdata$class[NaRow[mR]] == "continuous"){
 
-          ContinuousData <- corContiTraitsOneTrait(subdata$nbr_traits[manualRow[mR]],
+          ContinuousData <- corContiTraitsOneTrait(subdata$nbr_traits[NaRow[mR]],
                                                    FinalData[, manTraitValue],
-                                                   subdata$highCor[manualRow[mR]])$data
+                                                   subdata$highCor[NaRow[mR]])$data
 
-          manualParam <- c(manualParam, ContinuousData$param)
+          NaParam <- c(NaParam, ContinuousData$param)
 
           #change columns names
           colnames(ContinuousData) <- sprintf("F%s.%s/%s",
-                                              seq(1:subdata$nbr_traits[manualRow[mR]]),
+                                              seq(1:subdata$nbr_traits[NaRow[mR]]),
                                               i,
-                                              subdata$row[manualRow[mR]])
+                                              subdata$row[NaRow[mR]])
 
           FinalData <- cbind(FinalData, ContinuousData)
         }
@@ -436,12 +439,11 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
     SigmasList[[i]] <- Sigmas
     TreeList[[i]] <- SimTree
 
-    if(any("Manual" %in% subdata$model)){
-      manualParamList[[i]] <- manualParam
+    if(any("Na" %in% subdata$model)){
+      NaParamList[[i]] <- NaParam
     }
 
     row.names(FinalData) <- SimTree$tip.label
-
 
     if(length(grep("F.", colnames(FinalData))) > 0){
       #Standardize continuous traits mean = 0  and sd = 1
@@ -452,19 +454,20 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
     if(length(grep("I.", colnames(FinalData))) > 0){
       #convert the discrete columns in factors
       DiscreteIndex <- grep("I.", colnames(FinalData))
-      FinalData[ ,DiscreteIndex] <- lapply(FinalData[ ,DiscreteIndex, drop = FALSE], factor)
+      FinalData[ ,DiscreteIndex] <- lapply(FinalData[ ,DiscreteIndex], factor)
 
       #add levels in factor if number of levels = 1
-      for (c in 1:length(DiscreteIndex)){
-        if(length(levels(FinalData[ , DiscreteIndex[c]])) == 1){
-          if(levels(FinalData[ , DiscreteIndex[c]]) == "0"){
-            FinalData[ , DiscreteIndex[c]] <- factor(FinalData[ , DiscreteIndex[c]], levels = c("0", "1"))
+      for (c in 1:ncol(FinalData[ ,DiscreteIndex])){
+        if(length(levels(FinalData[ ,DiscreteIndex][,c])) == 1){
+          if(levels(FinalData[ ,DiscreteIndex][,c]) == "0"){
+            FinalData[ ,DiscreteIndex][,c] <- factor(FinalData[ ,DiscreteIndex][,c], levels = c("0", "1"))
           }
           else{
-            colName <- names(FinalData[ , DiscreteIndex[c], drop = FALSE])
+            colName <- names(FinalData[ ,DiscreteIndex])[c]
             row <- as.numeric(str_extract(colName, "(?<=\\/)\\d+"))
             Nstates <- dataframe[row, "states"]
-            FinalData[ , DiscreteIndex[c]] <- factor(FinalData[ , DiscreteIndex[c]], levels = as.character(0:(Nstates-1)))
+            FinalData[ ,DiscreteIndex][,c] <- factor(FinalData[ ,DiscreteIndex][,c],
+                                                     levels = as.character(0:(Nstates-1)))
           }
         }
       }
@@ -479,7 +482,7 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
                SigmaMatrices = SigmasList,
                TreeList = TreeList[1],
                PhyloParam = param_tree,
-               Manual_param = manualParamList,
+               Na_param = NaParamList,
                Dataframe = dataframe)
 
   #Save data

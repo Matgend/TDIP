@@ -443,6 +443,40 @@ corContiTraitsOneTrait <- function(nbrTraits, discreteTrait, highCor){
   return(list(data = as.data.frame(contiMatrix, stringsAsFactors=TRUE), parameters = param))
 }
 
+#' @title Rescale a phylogenetic tree
+#'
+#' @description This function rescales a phylogenetic tree of class phylo according to kappa or lambda (Pagel)
+#'
+#' @usage rescaleTree(tree, subdata)
+#'
+#' @param tree phylo object
+#' @param subdata a dataframe composed of the columns of the parameter called dataframe of the data_simulator function
+#' @return a phylo object rescaled according to the model define in the data frame.
+rescaleTree <- function(tree, subdata){
+
+  #rescale phylogeny
+  lambdaCheck <- mean(subdata$lambda)
+  kappaCheck <- mean(subdata$kappa)
+
+  if(lambdaCheck != 0 & kappaCheck != 0 & lambdaCheck != 1 & kappaCheck != 1){
+    stop("lambda or kappa should be equal to 1")
+  }
+
+  else if(lambdaCheck != 1){
+    subdataTree <- geiger::rescale(tree, "lambda", lambdaCheck)
+  }
+
+  else if (kappaCheck != 1){
+    subdataTree <- geiger::rescale(tree, "kappa", kappaCheck)
+  }
+
+  else{
+    subdataTree <- tree
+  }
+
+  return(subdataTree)
+}
+
 
 ###################
 #Functions for GAIN
