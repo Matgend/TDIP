@@ -400,9 +400,10 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
 
           DiscreteData <- corDiscTraitsOneTrait(subdata$nbr_traits[NaRow[mR]],
                                                 FinalData[, manTraitValue],
-                                                subdata$highCor[NaRow[mR]])$data
+                                                subdata$highCor[NaRow[mR]])
 
           NaParam <- c(NaParam, DiscreteData$param)
+          DiscreteData <- DiscreteData$data
 
           #change columns names
           colnames(DiscreteData) <- sprintf("I%s.%s/%s",
@@ -418,9 +419,10 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
 
           ContinuousData <- corContiTraitsOneTrait(subdata$nbr_traits[NaRow[mR]],
                                                    FinalData[, manTraitValue],
-                                                   subdata$highCor[NaRow[mR]])$data
+                                                   subdata$highCor[NaRow[mR]])
 
           NaParam <- c(NaParam, ContinuousData$param)
+          ContinuousData <- ContinuousData$data
 
           #change columns names
           colnames(ContinuousData) <- sprintf("F%s.%s/%s",
