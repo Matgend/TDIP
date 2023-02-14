@@ -95,67 +95,72 @@ missing_data_imputation <- function(ImputationApproachesNames,
 
   }
 
-  print("start ML")
-  for(s in 1:length(strategies)){
+  ML_strategies <- c("mice_phylo", "missForest_phylo", "kNN_phylo", "gain_phylo")
 
-    if(strategies[s] == "NP"){
-      variance_fraction <- 0
-    }
+  if(any(ImputationApproachesNames %in% ML_strategies)){
 
-    else if(strategies[s] == "P"){
+    print("start ML")
+    for(s in 1:length(strategies)){
 
-      if(is.null(varfrac)){
-        stop("Error: 0 < varfrac < 1")
-      }
-      variance_fraction <- as.numeric(varfrac)
-    }
-
-    else if(strategies[s] == "2-step"){
-      variance_fraction <- 2
-    }
-
-    MixedImputationApproaches <- list("mice_phylo", list(data, nbrMI,
-                                                         variance_fraction, tree, maxit, mincor, hint),
-                                      "missForest_phylo", list(data, variance_fraction,
-                                                               maxiter = 10, ntree = 100,
-                                                               mtry = floor(ncol(data)/3), tree, hint),
-                                      "kNN_phylo", list(data, k, numFun, catFun,
-                                                        variance_fraction, tree, hint),
-                                      "gain_phylo", list(data, variance_fraction, tree,
-                                                    batch_size = round(ncol(data)*0.2),
-                                                    hint_rate = 0.9, alpha = 100, epochs = 10000, hint))
-
-    #to use only the imputation methods in ImputationApproachesNames
-    methodsIndex <- which(MixedImputationApproaches %in% ImputationApproachesNames)
-
-    for(method in methodsIndex){
-      #univariate, missrandomForest and imputeKNN don't work.
-      if((MixedImputationApproaches[[method]] == "mice_phylo" |
-          MixedImputationApproaches[[method]] == "missForest_phylo" |
-          MixedImputationApproaches[[method]] == "kNN_phylo") & ncol(data) == 1 & variance_fraction == 0){
-        next
+      if(strategies[s] == "NP"){
+        variance_fraction <- 0
       }
 
-      imputeName <- MixedImputationApproaches[[method]]
-      imputeName[stringr::str_detect(imputeName, "mice")] <- "MICE"
-      imputeName[stringr::str_detect(imputeName, "miss")] <- "MissForest"
-      imputeName[stringr::str_detect(imputeName, "kNN")] <- "KNN"
-      imputeName[stringr::str_detect(imputeName, "gain")] <- "GAIN"
+      else if(strategies[s] == "P"){
+
+        if(is.null(varfrac)){
+          stop("Error: 0 < varfrac < 1")
+        }
+        variance_fraction <- as.numeric(varfrac)
+      }
+
+      else if(strategies[s] == "2-step"){
+        variance_fraction <- 2
+      }
+
+      MixedImputationApproaches <- list("mice_phylo", list(data, nbrMI,
+                                                           variance_fraction, tree, maxit, mincor, hint),
+                                        "missForest_phylo", list(data, variance_fraction,
+                                                                 maxiter = 10, ntree = 100,
+                                                                 mtry = floor(ncol(data)/3), tree, hint),
+                                        "kNN_phylo", list(data, k, numFun, catFun,
+                                                          variance_fraction, tree, hint),
+                                        "gain_phylo", list(data, variance_fraction, tree,
+                                                           batch_size = round(ncol(data)*0.2),
+                                                           hint_rate = 0.9, alpha = 100, epochs = 10000, hint))
+
+      #to use only the imputation methods in ImputationApproachesNames
+      methodsIndex <- which(MixedImputationApproaches %in% ImputationApproachesNames)
+
+      for(method in methodsIndex){
+        #univariate, missrandomForest and imputeKNN don't work.
+        if((MixedImputationApproaches[[method]] == "mice_phylo" |
+            MixedImputationApproaches[[method]] == "missForest_phylo" |
+            MixedImputationApproaches[[method]] == "kNN_phylo") & ncol(data) == 1 & variance_fraction == 0){
+          next
+        }
+
+        imputeName <- MixedImputationApproaches[[method]]
+        imputeName[stringr::str_detect(imputeName, "mice")] <- "MICE"
+        imputeName[stringr::str_detect(imputeName, "miss")] <- "MissForest"
+        imputeName[stringr::str_detect(imputeName, "kNN")] <- "KNN"
+        imputeName[stringr::str_detect(imputeName, "gain")] <- "GAIN"
 
 
-      imputedValue <- do.call(MixedImputationApproaches[[method]], MixedImputationApproaches[[method + 1]])$imputedData
-      # if(length(contiColumns) != 0){
-      #   imputedValue[, contiColumns] <- exp(imputedValue[, contiColumns])
-      # }
-      names(imputedValue) <- colNames
-      imputedData <- c(imputedData, list(imputedValue))
+        imputedValue <- do.call(MixedImputationApproaches[[method]], MixedImputationApproaches[[method + 1]])$imputedData
+        # if(length(contiColumns) != 0){
+        #   imputedValue[, contiColumns] <- exp(imputedValue[, contiColumns])
+        # }
+        names(imputedValue) <- colNames
+        imputedData <- c(imputedData, list(imputedValue))
 
-      #change names
+        #change names
 
 
 
-      imputedName <- paste(imputeName, strategies[s], sep = "_")
-      imputedNames <- c(imputedNames, imputedName)
+        imputedName <- paste(imputeName, strategies[s], sep = "_")
+        imputedNames <- c(imputedNames, imputedName)
+      }
     }
   }
 
