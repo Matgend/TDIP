@@ -60,15 +60,13 @@ missing_data_imputation <- function(ImputationApproachesNames,
     if(any(contiColumns %in% naColumns) & ("pi_continuous_traits" %in% ImputationApproachesNames | "2-step" %in% strategies)){
       contiImputed <- pi_continuous_traits(data[ ,contiColumns[which(contiColumns %in% naColumns)], drop = FALSE], tree)
       #contiImputed$imputedData <- exp(contiImputed$imputedData)
-      imputedValue[ ,contiColumns] <- contiImputed$imputedData
+      imputedValue[ ,names(contiImputed$imputedData)] <- contiImputed$imputedData
       print("done Rphylopars")
     }
 
-
-
     if(any(discColumns %in% naColumns) & ("pi_categorical_traits" %in% ImputationApproachesNames | "2-step" %in% strategies)){
       discrImputed <- pi_categorical_traits(data[ ,discColumns[which(discColumns %in% naColumns)], drop = FALSE], tree)
-      imputedValue[, discColumns] <- discrImputed$imputedData
+      imputedValue[, names(discrImputed$imputedData)] <- discrImputed$imputedData
       print("done corHMM")
     }
 
