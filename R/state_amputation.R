@@ -14,9 +14,14 @@
 #'
 #'@return A dataframe with missing value in the columnNa
 #'@export
-state_amputation <- function(data, state, amount, level, columnNa, columnConti){
+state_amputation <- function(data,
+                             state,
+                             amount,
+                             level,
+                             columnNa,
+                             columnConti){
 
-  index_state <- which(data[, column, drop = FALSE] == state)
+  index_state <- which(data[, columnNa, drop = FALSE] == state)
   subData <- data[which(data[index_state, columnNa] == state), ]
 
   if(level == "rdn"){
