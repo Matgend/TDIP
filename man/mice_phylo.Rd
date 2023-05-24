@@ -15,6 +15,10 @@ mice_phylo(missingData, nbrMI, variance_fraction = 0, tree, hint = NULL)
 
 \item{tree}{phylo object}
 
+\item{maxit}{maxit maximum number of iteration}
+
+\item{mincor}{minimal correlation for prediction matrix}
+
 \item{hint}{data frame already imputed by a comparative methods (Rphylopars for continuous and corHMM for discrete)}
 }
 \value{

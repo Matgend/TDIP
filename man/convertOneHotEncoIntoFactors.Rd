@@ -13,7 +13,7 @@ convertOneHotEncoIntoFactors(oneHotData, nativeColNames)
 encoding).}
 }
 \value{
-A data.frame in which each variable that were one hot encoding are now factors.
+A dataframe in which each variable that were one hot encoding are now factors.
 }
 \description{
 This function converts data frame of one hot encoding

@@ -384,17 +384,12 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
       NaParam <- c()
       for(mR in 1:length(NaRow)){
 
-        if(subdata$states[which(subdata$model == "Na" & subdata$class != "continuous")] !=
-           subdata$states[which(subdata$model != "Na")]){
-          stop("The Na trait must have the same number of states that the correlated discrete trait.")
-        }
 
         manTraitValue <- subdata$manTrait[NaRow[mR]]
 
         if(manTraitValue == 0){
           manTraitValue <- sample(ncol(FinalData), 1)
         }
-
 
         if(subdata$class[NaRow[mR]] != "continuous"){
 

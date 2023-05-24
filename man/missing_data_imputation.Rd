@@ -15,6 +15,18 @@ missing_data_imputation(ImputationApproachesNames, data, tree = NULL, strategies
 
 \item{strategies}{character vector "NP", "P", "2-step"}
 
+\item{maxit}{maxit maximum number of iteration (mice)}
+
+\item{nbrMI}{integer, mentioning the total number of imputations (mice)}
+
+\item{k}{integer, number of nearest neighbors used (kNN)}
+
+\item{numFun}{numFun: function for aggregating the kNN in the case of a numerical variable}
+
+\item{catFun}{catFun: function for aggregating the kNN in the case of a categorical variable}
+
+\item{mincor}{minimal correlation for prediction matrix in mice}
+
 \item{varfrac}{amount of variance explained by the eigenvectors of the phylogenetic tree (provide only if in strategy
 there is "P")}
 

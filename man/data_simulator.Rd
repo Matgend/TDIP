@@ -24,7 +24,7 @@ The parameter \code{dataframe} is composed of 11 columns:
 \itemize{
 \item nbr_traits: Number of traits simulated with specific parameters
 \item class: Type of traits, (continuous, non_eq_nominal(categorical) and ordinal)
-\item model: Evolutionary model (BM1, OU1, ARD, SYM, ER, Manual)
+\item model: Evolutionary model (BM1, OU1, ARD, SYM, ER, Na)
 \item states: Number of states for discrete traits, (if continuous set it to 1)
 \item correlation: Index corresponding to the group of simulated traits which are correlated or not to other traits
 \item uncorr_traits: Among the "nbr_traits", it's the number of uncorrelated traits
@@ -32,6 +32,6 @@ The parameter \code{dataframe} is composed of 11 columns:
 \item lambda: Integer, Pagel's lambda
 \item kappa: Integer, Pagel's kappa
 \item highCor: Correlation rate between the trait defined in "manTrait" and the simulated traits.
-\item manTrait: Index of the trait correlated with the trait(s) simulated according to the manual model.
+\item manTrait: Index of the trait correlated with other traits.
 }
 }

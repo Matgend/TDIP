@@ -350,20 +350,23 @@ corMatrixDisc <- function(nbrState, highCor){
 #' @description This function generates a continuous trait which is correlated to a discrete trait according to a
 #' correlation factor. The function applies the function rnorm_pre from the R package faux.
 #'
-#' @usage corMatrixConti(discreteTrait, highCor)
+#' @usage corMatrixConti(discreteTrait, highCor, shuffle)
 #'
 #' @param discreteTrait vector of integers
 #' @param highCor numerical, strength of the correlation.
+#' @param shuffle boolean, if true discrete states are shuffled, False, discrete states are not shuffled
 #' @return A vector of continuous variables normally distributed and correlated to the discrete trait.
-corMatrixConti <- function(discreteTrait, highCor){
+corMatrixConti <- function(discreteTrait, highCor, shuffle = TRUE){
 
   discreteTrait <- as.numeric(discreteTrait)
   discreteTrait2 <- discreteTrait
   #shuffle discrete trait (randomize order of the states)
   nbrState <- length(unique(discreteTrait))
-  S <- sample(0:(nbrState - 1), nbrState)
-  for(i in 1:nbrState){
-    discreteTrait[discreteTrait2 == S[i]] <- (i - 1)
+  if(shuffle){
+    S <- sample(0:(nbrState - 1), nbrState)
+    for(i in 1:nbrState){
+      discreteTrait[discreteTrait2 == S[i]] <- (i - 1)
+    }
   }
   contiTrait <- faux::rnorm_pre(discreteTrait,
                                 mu =  mean(discreteTrait),
@@ -419,18 +422,19 @@ corDiscTraitsOneTrait <- function(nbrTraits, discreteTrait, highCor){
 #' @description This function generates a data frame of continuous traits
 #'  which are all correlated with a single traits but uncorrelated with each other.
 #'
-#' @usage corContiTraitsOneTrait(nbrTraits, discreteTrait, highCor)
+#' @usage corContiTraitsOneTrait(nbrTraits, discreteTrait, highCor, shuffle)
 #'
 #' @param nbrTraits vector, defining the number of traits (columns)
 #' @param discreteTraits vector from which the simulated traits are correlated
 #' @param highCor numerical, strength of the correlation.
+#' @param shuffle boolean, if true discrete states are shuffled, False, discrete states are not shuffled
 #' @return A data frame of continuous traits where each column is a trait. Continuous traits are numeric.
-corContiTraitsOneTrait <- function(nbrTraits, discreteTrait, highCor){
+corContiTraitsOneTrait <- function(nbrTraits, discreteTrait, highCor, shuffle = TRUE){
 
   #convert discreteTrait
   discreteTrait <- as.numeric(discreteTrait)
 
-  contiMatrix <- lapply(1:nbrTraits, function(x) corMatrixConti(discreteTrait, highCor))
+  contiMatrix <- lapply(1:nbrTraits, function(x) corMatrixConti(discreteTrait, highCor, shuffle))
   contiMatrix <- matrix(unlist(contiMatrix), ncol = nbrTraits)
   #colnames(contiMatrix) <- paste0("corC", 1:ncol(contiMatrix))
 
@@ -490,7 +494,7 @@ rescaleTree <- function(tree, subdata){
 #' @usage generateOneHotEncoVariables(NaNData)
 #'
 #' @param NaNData data frame of one or several factors columns
-#' @return A list containing a data frame in which each discrete variable is converted as one hot encoding and vector of
+#' @return A list containing a dataframe in which each discrete variable is converted as one hot encoding and vector of
 #' characters.
 generateOneHotEncoVariables <- function(NaNData){
 
@@ -520,7 +524,7 @@ generateOneHotEncoVariables <- function(NaNData){
 #' @param oneHotData data frame of one one hot encoding
 #' @param nativeColNames columns names of the original column names of the one hot encoding(before the conversion in one hot
 #' encoding).
-#' @return A data.frame in which each variable that were one hot encoding are now factors.
+#' @return A dataframe in which each variable that were one hot encoding are now factors.
 convertOneHotEncoIntoFactors <- function(oneHotData, nativeColNames){
 
   #isolate one hot encoding variables

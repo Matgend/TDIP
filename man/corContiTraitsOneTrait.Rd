@@ -4,12 +4,14 @@
 \alias{corContiTraitsOneTrait}
 \title{Continuous traits correlated to a single trait discrete trait}
 \usage{
-corContiTraitsOneTrait(nbrTraits, discreteTrait, highCor)
+corContiTraitsOneTrait(nbrTraits, discreteTrait, highCor, shuffle)
 }
 \arguments{
 \item{nbrTraits}{vector, defining the number of traits (columns)}
 
 \item{highCor}{numerical, strength of the correlation.}
+
+\item{shuffle}{boolean, if true discrete states are shuffled, False, discrete states are not shuffled}
 
 \item{discreteTraits}{vector from which the simulated traits are correlated}
 }

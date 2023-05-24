@@ -4,12 +4,14 @@
 \alias{corMatrixConti}
 \title{Correlated continuous variable}
 \usage{
-corMatrixConti(discreteTrait, highCor)
+corMatrixConti(discreteTrait, highCor, shuffle)
 }
 \arguments{
 \item{discreteTrait}{vector of integers}
 
 \item{highCor}{numerical, strength of the correlation.}
+
+\item{shuffle}{boolean, if true discrete states are shuffled, False, discrete states are not shuffled}
 }
 \value{
 A vector of continuous variables normally distributed and correlated to the discrete trait.
