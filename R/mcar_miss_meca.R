@@ -30,7 +30,7 @@ mcar_miss_meca <- function(missingRate, ds, cols_mis){
   #discIndex <- grep("I.", names(ds[, cols_mis, drop = FALSE]))
   naColumns <- which(colSums(is.na(ds[, cols_mis, drop = FALSE])) > 0)
   classVar <- lapply(ds[, cols_mis, drop = FALSE], class)
-  discIndex <- which(classVar != "numeric")
+  discIndex <- which(classVar == "factor")
 
 
   if(length(discIndex) != 0){

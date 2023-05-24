@@ -29,13 +29,13 @@ state_amputation <- function(data,
   }
 
   else if(level == "top"){
-    indexNa <- order(subData[,columnConti], decreasing = TRUE)[1:(nrow(subData[,2])*amount)]
+    indexNa <- order(subData[,columnConti], decreasing = TRUE)[1:(nrow(subData[,columnConti, drop = FALSE])*amount)]
     amputedData <- subData
     amputedData[indexNa, columnNa] <- NA
   }
 
   else if(level == "low"){
-    indexNa <- order(subData[,columnConti], decreasing = FALSE)[1:(nrow(subData[,2])*amount)]
+    indexNa <- order(subData[,columnConti], decreasing = FALSE)[1:(nrow(subData[,columnConti, drop = FALSE])*amount)]
     amputedData <- subData
     amputedData[indexNa, columnNa] <- NA
   }

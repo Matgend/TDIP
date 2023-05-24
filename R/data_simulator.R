@@ -446,12 +446,14 @@ data_simulator <- function(param_tree, dataframe, save = NULL){
       #Standardize continuous traits mean = 0  and sd = 1
       ContiIndex <- grep("F.", colnames(FinalData))
       FinalData[, ContiIndex] <- scale(FinalData[, ContiIndex, drop = FALSE])
+      #convert continuous columns in numeric
+      FinalData[ , ContiIndex] <- lapply(FinalData[ ,ContiIndex, drop = FALSE], as.numeric)
     }
 
     if(length(grep("I.", colnames(FinalData))) > 0){
       #convert the discrete columns in factors
       DiscreteIndex<- grep("I.", colnames(FinalData))
-      FinalData[ ,DiscreteIndex] <- lapply(FinalData[ ,DiscreteIndex, drop = FALSE], factor)
+      FinalData[ , DiscreteIndex] <- lapply(FinalData[ , DiscreteIndex, drop = FALSE], factor)
 
       #add levels in factor if number of levels = 1
       for (c in 1:ncol(FinalData[ ,DiscreteIndex, drop = FALSE])){

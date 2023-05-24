@@ -25,7 +25,7 @@ mnar_miss_meca <- function(missingRate, ds, cols_mis){
 
     naColumns <- which(colSums(is.na(ds[, col, drop = FALSE])) > 0)
     classVar <- lapply(ds[, col, drop = FALSE], class)
-    contiIndex <- which(classVar == "numeric")
+    contiIndex <- which(classVar != "factor")
     if(length(contiIndex) == 1){
       ds[ , col] <- missMethods::delete_MNAR_censoring(ds[ , col, drop = FALSE], missingRate,
                                                        cols_mis = cols_mis[col], where = "upper") #don't change where arg
