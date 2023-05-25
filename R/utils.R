@@ -769,7 +769,7 @@ myMissForest <- function(xmis, maxiter = 10, ntree = 100, variablewise = FALSE,
           misX <- ximp[misi, seq(1, p)[-varInd]] # prediction variables
           typeY <- varType[varInd]
           if (typeY == 'numeric'){
-            RF <- randomForest(
+            RF <- randomForest::randomForest(
               x = obsX,
               y = obsY,
               ntree = ntree,
@@ -838,7 +838,7 @@ myMissForest <- function(xmis, maxiter = 10, ntree = 100, variablewise = FALSE,
               RF <- foreach(xntree = idiv(ntree, chunks = getDoParWorkers()),
                             .combine = 'combine', .multicombine = TRUE,
                             .packages = 'randomForest') %dorng% {
-                              randomForest( x = obsX,
+                              randomForest::randomForest( x = obsX,
                                             y = obsY,
                                             ntree = xntree,
                                             mtry = mtry,
@@ -852,7 +852,7 @@ myMissForest <- function(xmis, maxiter = 10, ntree = 100, variablewise = FALSE,
               OOBerror[varInd] <- mean((predict(RF) - RF$y) ^ 2, na.rm = TRUE)
               #               OOBerror[varInd] <- RF$mse[ntree]
             } else {
-              RF <- randomForest( x = obsX,
+              RF <- randomForest::randomForest( x = obsX,
                                   y = obsY,
                                   ntree = ntree,
                                   mtry = mtry,
