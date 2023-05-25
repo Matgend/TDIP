@@ -33,6 +33,7 @@ Imports:
     mltools,
     mvMORPH,
     NADIA,
+    randomForest,
     phangorn,
     phytools,
     PVR,

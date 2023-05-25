@@ -791,7 +791,7 @@ myMissForest <- function(xmis, maxiter = 10, ntree = 100, variablewise = FALSE,
               oerr <- 0
               misY <- factor(rep(names(summarY), length(misi)))
             } else {
-              RF <- randomForest(
+              RF <- randomForest::randomForest(
                 x = obsX,
                 y = obsY,
                 ntree = ntree,
@@ -875,7 +875,7 @@ myMissForest <- function(xmis, maxiter = 10, ntree = 100, variablewise = FALSE,
                 RF <- foreach(xntree = idiv(ntree, chunks = getDoParWorkers()),
                               .combine = 'combine', .multicombine = TRUE,
                               .packages = 'randomForest') %dorng% {
-                                randomForest(
+                                randomForest::randomForest(
                                   x = obsX,
                                   y = obsY,
                                   ntree = xntree,
@@ -896,7 +896,7 @@ myMissForest <- function(xmis, maxiter = 10, ntree = 100, variablewise = FALSE,
                 ne <- ne[! is.na(ne)]
                 OOBerror[varInd] <- sum(ne) / length(ne)
               } else {
-                RF <- randomForest(x = obsX,
+                RF <- randomForest::randomForest(x = obsX,
                                    y = obsY,
                                    ntree = ntree,
                                    mtry = mtry,

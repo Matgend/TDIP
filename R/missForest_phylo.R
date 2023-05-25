@@ -72,7 +72,6 @@ missForest_phylo <- function(missingData, variance_fraction = 0, maxiter = 10, n
   missForest_imputation <- myMissForest(xmis = missingData, maxiter = maxiter,
                                         ntree = ntree, mtry = mtry, verbose = TRUE)
 
-  myMissForest
   #cut eigenvectors columns
   missForest_imputation$ximp <- missForest_imputation$ximp[,1:Nvariables, drop = FALSE]
 
