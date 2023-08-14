@@ -27,7 +27,7 @@ imputation_error <- function(imputedData, trueData, missingData, imputationAppro
     #know is NaNs in the columns(trait)
     NaNRowIndex <- which(is.na(missingData[,c]))
 
-    if(length(NaNRowIndex != 0)){
+    if(length(NaNRowIndex) != 0){
 
       traitNames <- c(traitNames, names(trueData)[c])
       #missingValues <- missingData[NaNRowIndex, c]
