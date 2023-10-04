@@ -11,13 +11,13 @@
 #' @param ntree number of trees to grow in each forest.
 #' @param mtry number of variables randomly sampled at each split. By default it's the square root of the number of
 #' variables
-#' @param tree phylo object
+#' @param tree phylo object, by default = NULL
 #' @param hint dataframe already imputed by a comprative methods (Rphylopars for continuous and corHMM for discrete)
 #' @return A data frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the imputation
 #' @export
 #'
 missForest_phylo <- function(missingData, variance_fraction = 0, maxiter = 10, ntree = 100,
-                             mtry = sqrt(ncol(missingData)), tree, hint = NULL){
+                             mtry = sqrt(ncol(missingData)), tree = NULL, hint = NULL){
 
   colNames <- names(missingData)
 
@@ -58,7 +58,7 @@ missForest_phylo <- function(missingData, variance_fraction = 0, maxiter = 10, n
   }
 
   # want to include phylogeny information
-  if(variance_fraction != 0 & variance_fraction != 2){
+  if(variance_fraction != 0 & variance_fraction != 2 & !is.null(tree)){
 
     eigen <- get_eigenvec(tree, variance_fraction)
     missingData <- cbind(missingData[, 1:ncol(missingData), drop = FALSE],

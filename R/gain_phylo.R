@@ -8,7 +8,7 @@
 #' @param missingData data.frame of 1 or more columns containing NAs
 #' @param variance_fraction total amount of minimum variance to be represented by the eigenvectors which correspond to the
 #' phylogenetic inertia
-#' @param tree phylo object
+#' @param tree phylo object, by default = NULL
 #' @param batch_size integer
 #' @param hint_rate numerical
 #' @param alpha numerical, hyperparameter
@@ -16,7 +16,7 @@
 #' @param hint dataframe already imputed by a comprative methods (Rphylopars for continuous and corHMM for discrete)
 #' @return A list of list containing in the "tab" imputedData the imputed Data and in the "tab" parametersGain, the discriminant loss values, the generative loss values, the MSE loss values and the iterations correspond to these values (important to generate a plot).
 #' @export
-gain_phylo <- function(missingData, variance_fraction, tree, batch_size = round(ncol(missingData)*0.2),
+gain_phylo <- function(missingData, variance_fraction, tree = NULL, batch_size = round(ncol(missingData)*0.2),
                   hint_rate = 0.9, alpha = 100, epochs = 10000, hint = NULL){
 
 
@@ -40,7 +40,7 @@ gain_phylo <- function(missingData, variance_fraction, tree, batch_size = round(
   }
 
   # want to include phylogeny information
-  if(variance_fraction != 0 & variance_fraction != 2){
+  if(variance_fraction != 0 & variance_fraction != 2 & !is.null(tree)){
 
     eigen <- get_eigenvec(tree, variance_fraction)
     missingData <- cbind(missingData[, 1:ncol(missingData), drop = FALSE],

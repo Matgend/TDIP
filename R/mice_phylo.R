@@ -9,13 +9,13 @@
 #' @param missingData data frame of 1 or more columns containing NAs
 #' @param nbrMI integer, mentioning the total number of imputations
 #' @param variance_fraction variance_fraction minimum variance (%) explained by the eigenvectors
-#' @param tree phylo object
+#' @param tree phylo object, by default = NULL
 #' @param maxit maxit maximum number of iteration
 #' @param mincor minimal correlation for prediction matrix
 #' @param hint data frame already imputed by a comparative methods (Rphylopars for continuous and corHMM for discrete)
 #' @return A data frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the imputation
 #' @export
-mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, maxit = 5, mincor = NULL,  hint = NULL){
+mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree = NULL, maxit = 5, mincor = NULL,  hint = NULL){
 
   colNames <- names(missingData)
   nativeMissingData <- missingData
@@ -27,7 +27,7 @@ mice_phylo <- function(missingData, nbrMI, variance_fraction = 0, tree, maxit = 
     missingData <- cbind(missingData, hint)
   }
 
-  if(variance_fraction != 0 & variance_fraction != 2){
+  if(variance_fraction != 0 & variance_fraction != 2 & !is.null(tree)){
 
     eigen <- get_eigenvec(tree, variance_fraction)
     missingData <- cbind(missingData[, 1:ncol(missingData), drop = FALSE],

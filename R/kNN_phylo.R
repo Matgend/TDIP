@@ -9,11 +9,11 @@
 #' @param numFun numFun: function for aggregating the kNN in the case of a numerical variable
 #' @param catFun catFun: function for aggregating the kNN in the case of a categorical variable
 #' @param variance_fraction variance_fraction minimum variance (%) explained by the eigenvectors
-#' @param tree phylo object
+#' @param tree phylo object, by default = NULL
 #' @param hint data frame already imputed by a comprative methods (Rphylopars for continuous and corHMM for discrete)
 #' @return A data frame of 1 or more numeric columns with the NAs replaced by values + parameters used for the imputation
 #' @export
-kNN_phylo <- function(missingData, k, numFun, catFun, variance_fraction = 0, tree, hint = NULL){
+kNN_phylo <- function(missingData, k, numFun, catFun, variance_fraction = 0, tree = NULL, hint = NULL){
 
   NbrCol <- ncol(missingData)
 
@@ -25,7 +25,7 @@ kNN_phylo <- function(missingData, k, numFun, catFun, variance_fraction = 0, tre
     missingData <- cbind(missingData, hint)
   }
 
-  if(variance_fraction != 0 & variance_fraction != 2){
+  if(variance_fraction != 0 & variance_fraction != 2 & !is.null(tree)){
 
     eigen <- get_eigenvec(tree, variance_fraction)
     missingData <- cbind(missingData[, 1:ncol(missingData), drop = FALSE],
