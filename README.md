@@ -83,15 +83,14 @@ data(tree)
 
 simulatedData$Species <- rownames(simulatedData)
 
+#if no tree
 empData <- data_preprocessing(simulatedData, 
                               empTree = NULL, 
                               save = NULL)
-#if no tree
+
 empData <- data_preprocessing(simulatedData, 
                               empTree = tree, 
                               save = NULL)
-
-#head(empData$FinalData)
 ```
 
 ## Generation of missing values
