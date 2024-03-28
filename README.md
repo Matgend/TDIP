@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/545443535.svg)](https://zenodo.org/doi/10.5281/zenodo.10890000)
 # TDIP
 
 Trait Data Imputation with Phylogeny (TDIP) is a package allowing to impute missing values in a trait dataset with the help or not of a phylogenetic tree. By using this package, the user can simulate trait datasets, include missing values according to several missing mechanisms, and / or apply various imputation approaches.
