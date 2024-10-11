@@ -12,14 +12,19 @@ library(naniar)
 
 TDIP uses R and Python. All the packages needed can be installed via R.
 
-1. Install TDIP directly from Github using devtools
+1. Since the R package NADIA was recently removed from CRAN, please download the latest version from its CRAN archive (https://cran.r-project.org/src/contrib/Archive/NADIA/) and install it from local.
+```{r, eval = FALSE}
+install.packages("YOURPATH/NADIA_0.4.2.tar.gz", repos = NULL, type = "source")
+```
+
+2. Install TDIP directly from Github using devtools
 ```{r, eval = FALSE}
 install.packages("devtools")
 library(devtools)
 devtools::install_github("Matgend/TDIP")
 ```
 
-2. To use GAIN, `python >= 3.9` needs to be installed, as well as the `tensorflow`, `numpy`, `scikit-learn` and `tqdm` packages. The R package `reticulate` provides all the commands needed.
+3. To use GAIN, `python >= 3.9` needs to be installed, as well as the `tensorflow`, `numpy`, `scikit-learn` and `tqdm` packages. The R package `reticulate` provides all the commands needed.
 ```{r, eval = FALSE}
 
 #install python
